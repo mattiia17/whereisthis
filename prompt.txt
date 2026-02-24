@@ -1,0 +1,24 @@
+Crea una webapp completa chiamata "WhereIsThis?" con Next.js. La webapp permette all'utente di caricare una foto di un posto nel mondo che non conosce, e l'AI analizza l'immagine e gli dice dove è stata scattata.
+
+Layout e struttura della homepage:
+- Header con nome "WhereIsThis?" in alto a sinistra
+- Titolo centrale grande "Welcome!" con sottotitolo "You don't know where the image is located? Don't worry, upload it in the box below and you'll find out in just a few seconds!"
+- Area drag & drop grande per caricare l'immagine con testo "Drop the image"
+- Campo testo libero facoltativo sotto l'immagine con label "Additional Info" dove l'utente può aggiungere dettagli per aiutare l'identificazione
+- Tasto "CONFIRM" ben visibile sotto
+
+Design: dark mode, moderno e accattivante, usa colori vivaci per i dettagli (gradiente viola/blu), font puliti, animazioni fluide. Sorprendimi con qualcosa di bello.
+
+Pagina risultato dopo il CONFIRM:
+- Nazione identificata con bandiera emoji
+- Città/regione probabile
+- Percentuale di confidenza visiva (tipo barra o cerchio)
+- Spiegazione dettagliata del ragionamento visivo
+- Pulsante per tornare e fare una nuova ricerca
+
+Funzionalità tecniche:
+- Usa Gemini Vision API con il modello gemini-1.5-pro per analizzare le immagini
+- La chiave API sarà nella variabile d'ambiente GEMINI_API_KEY
+- Gestisci l'additional info passandola a Gemini come contesto aggiuntivo
+- Animazione di caricamento mentre Gemini analizza
+- Tutto pronto per deploy su Vercel con Next.js
