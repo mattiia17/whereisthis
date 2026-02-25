@@ -1,0 +1,619 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WhereIsThis?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800;900&family=JetBrains+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/exif-js@2.3.0/exif.min.js"></script>
+  <style>
+    :root {
+      --bg: #0b0a0d;
+      --surface: #13121a;
+      --border: #2a2636;
+      --accent: #b82e3c;
+      --accent-light: #d44455;
+      --accent-glow: rgba(184,46,60,0.3);
+      --accent-subtle: rgba(184,46,60,0.08);
+      --text: #f0ece6;
+      --muted: #6b6578;
+      --success: #4ecb8d;
+      --white: #ffffff;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:var(--bg); color:var(--text); font-family:'Outfit',sans-serif; min-height:100vh; overflow-x:hidden; }
+    body::before { content:''; position:fixed; inset:0; background-image:radial-gradient(circle at 1px 1px,rgba(184,46,60,0.03) 1px,transparent 0); background-size:48px 48px; pointer-events:none; z-index:0; }
+
+    .atmo { position:fixed; border-radius:50%; filter:blur(140px); pointer-events:none; z-index:0; }
+    .atmo-1 { width:700px; height:700px; background:var(--accent); opacity:0.06; top:-300px; left:-200px; animation:drift 25s ease-in-out infinite alternate; }
+    .atmo-2 { width:500px; height:500px; background:var(--accent); opacity:0.04; bottom:-200px; right:-150px; animation:drift 25s ease-in-out infinite alternate-reverse; }
+    .atmo-3 { width:300px; height:300px; background:var(--accent-light); opacity:0.03; top:40%; left:50%; animation:drift 20s ease-in-out infinite alternate; }
+    @keyframes drift { from{transform:translate(0,0) scale(1)} to{transform:translate(30px,20px) scale(1.08)} }
+
+    /* Header */
+    header { position:relative; z-index:10; padding:20px 40px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border); backdrop-filter:blur(12px); background:rgba(11,10,13,0.6); }
+    .logo { font-family:'Playfair Display',serif; font-weight:900; font-size:22px; color:var(--white); user-select:none; }
+    .logo .red { color:var(--accent); }
+    .header-right { display:flex; align-items:center; gap:12px; }
+    .header-badge { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:500; color:var(--muted); letter-spacing:2.5px; text-transform:uppercase; border:1px solid var(--border); padding:6px 14px; border-radius:4px; background:rgba(184,46,60,0.04); }
+    .history-btn { background:transparent; border:1px solid var(--border); color:var(--muted); font-family:'JetBrains Mono',monospace; font-size:10px; padding:6px 12px; border-radius:4px; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:5px; letter-spacing:1px; }
+    .history-btn:hover { border-color:var(--accent); color:var(--accent-light); }
+    .history-count { background:var(--accent); color:var(--white); font-size:9px; padding:1px 5px; border-radius:3px; font-weight:500; }
+
+    /* Main */
+    main { position:relative; z-index:10; max-width:680px; margin:0 auto; padding:72px 24px 60px; }
+
+    /* Hero */
+    .hero { text-align:center; margin-bottom:56px; animation:fadeUp 0.7s ease both; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+    .hero-tag { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:3.5px; text-transform:uppercase; color:var(--accent); margin-bottom:24px; display:flex; align-items:center; justify-content:center; gap:12px; }
+    .hero-tag::before,.hero-tag::after { content:''; width:32px; height:1px; background:var(--accent); opacity:0.35; }
+    h1 { font-family:'Playfair Display',serif; font-weight:900; font-size:clamp(44px,9vw,76px); line-height:1; letter-spacing:-2px; color:var(--white); margin-bottom:24px; }
+    .subtitle { font-size:15px; font-weight:300; color:var(--muted); line-height:1.8; max-width:440px; margin:0 auto; }
+    .subtitle strong { color:var(--text); font-weight:600; }
+
+    /* Upload */
+    .upload-section { animation:fadeUp 0.7s ease 0.15s both; }
+    .step-label { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:2.5px; text-transform:uppercase; color:var(--muted); margin-bottom:12px; display:flex; align-items:center; gap:10px; }
+    .step-num { color:var(--accent); font-weight:500; }
+
+    .drop-zone { border:1px dashed var(--border); border-radius:14px; padding:56px 40px; text-align:center; cursor:pointer; transition:all 0.35s; background:var(--surface); position:relative; overflow:hidden; }
+    .drop-zone::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at center,var(--accent-subtle) 0%,transparent 70%); opacity:0; transition:opacity 0.35s; }
+    .drop-zone:hover::before,.drop-zone.dragover::before { opacity:1; }
+    .drop-zone:hover,.drop-zone.dragover { border-color:var(--accent); border-style:solid; box-shadow:0 0 0 1px var(--accent),0 24px 64px rgba(184,46,60,0.08); }
+    .drop-icon { width:52px; height:52px; border:1px solid var(--border); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 18px; font-size:22px; background:var(--bg); transition:all 0.35s; }
+    .drop-zone:hover .drop-icon { border-color:var(--accent); transform:translateY(-3px); box-shadow:0 8px 24px rgba(184,46,60,0.15); }
+    .drop-text { font-family:'Playfair Display',serif; font-size:17px; font-weight:700; color:var(--text); margin-bottom:6px; }
+    .drop-sub { font-size:12px; font-weight:300; color:var(--muted); }
+    .drop-sub span { color:var(--accent-light); cursor:pointer; text-decoration:underline; text-underline-offset:3px; }
+    input[type="file"] { display:none; }
+
+    .preview-container { display:none; position:relative; border-radius:14px; overflow:hidden; border:1px solid var(--border); background:var(--surface); }
+    .preview-container img { width:100%; max-height:340px; object-fit:cover; display:block; }
+    .preview-overlay { position:absolute; top:12px; right:12px; }
+    .preview-btn { background:rgba(11,10,13,0.85); border:1px solid var(--border); color:var(--text); font-family:'JetBrains Mono',monospace; font-size:11px; padding:7px 14px; border-radius:6px; cursor:pointer; backdrop-filter:blur(12px); transition:all 0.2s; }
+    .preview-btn:hover { border-color:var(--accent); color:var(--accent); }
+
+    .exif-badge { position:absolute; bottom:12px; left:12px; background:rgba(11,10,13,0.85); border:1px solid var(--border); color:var(--success); font-family:'JetBrains Mono',monospace; font-size:10px; padding:5px 10px; border-radius:5px; backdrop-filter:blur(12px); display:none; align-items:center; gap:5px; }
+    .exif-badge.visible { display:flex; }
+    .exif-badge.no-data { color:var(--muted); }
+
+    /* Info */
+    .info-section { margin-top:20px; animation:fadeUp 0.7s ease 0.25s both; }
+    .info-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+    .optional-tag { font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; border:1px solid var(--border); padding:3px 8px; border-radius:3px; }
+    textarea { width:100%; background:var(--surface); border:1px solid var(--border); border-radius:14px; color:var(--text); font-family:'Outfit',sans-serif; font-size:13px; font-weight:300; padding:16px 20px; resize:none; height:88px; transition:all 0.3s; line-height:1.6; }
+    textarea::placeholder { color:var(--muted); }
+    textarea:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 1px var(--accent); }
+
+    /* Confirm */
+    .confirm-section { margin-top:28px; animation:fadeUp 0.7s ease 0.35s both; }
+    .confirm-btn { width:100%; background:var(--accent); color:var(--white); border:none; border-radius:14px; font-family:'Outfit',sans-serif; font-weight:600; font-size:15px; letter-spacing:1.5px; text-transform:uppercase; padding:18px; cursor:pointer; transition:all 0.3s; position:relative; overflow:hidden; }
+    .confirm-btn::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,transparent 30%,rgba(255,255,255,0.08)); opacity:0; transition:opacity 0.3s; }
+    .confirm-btn:hover::before { opacity:1; }
+    .confirm-btn:hover { transform:translateY(-2px); box-shadow:0 16px 48px var(--accent-glow); }
+    .confirm-btn:active { transform:translateY(0); }
+    .confirm-btn:disabled { opacity:0.35; cursor:not-allowed; transform:none; box-shadow:none; }
+
+    /* Loading */
+    .loading-screen { display:none; position:fixed; inset:0; background:var(--bg); z-index:100; align-items:center; justify-content:center; flex-direction:column; gap:28px; }
+    .loading-screen.active { display:flex; }
+    .scanner { width:160px; height:160px; position:relative; }
+    .scanner-ring { position:absolute; inset:0; border-radius:50%; border:1px solid var(--accent); opacity:0.3; animation:scanPulse 2.2s ease-in-out infinite; }
+    .scanner-ring:nth-child(2) { inset:18px; animation-delay:0.35s; border-color:var(--accent-light); }
+    .scanner-ring:nth-child(3) { inset:36px; animation-delay:0.7s; opacity:0.5; }
+    @keyframes scanPulse { 0%,100%{opacity:0.15;transform:scale(1)} 50%{opacity:0.8;transform:scale(1.04)} }
+    .scanner-dot { position:absolute; inset:50%; width:8px; height:8px; margin:-4px; background:var(--accent); border-radius:50%; box-shadow:0 0 24px var(--accent); animation:dotPulse 1.2s ease-in-out infinite; }
+    @keyframes dotPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.5)} }
+    .scanner-line { position:absolute; top:50%; left:10px; right:10px; height:1px; background:linear-gradient(90deg,transparent,var(--accent),transparent); animation:scanLine 2.2s linear infinite; }
+    @keyframes scanLine { 0%{transform:translateY(-65px);opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{transform:translateY(65px);opacity:0} }
+    .loading-text { font-family:'Playfair Display',serif; font-size:20px; font-weight:700; color:var(--text); }
+    .loading-sub { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:3px; text-transform:uppercase; animation:blink 1.8s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+    /* Results */
+    .results-screen { display:none; position:relative; z-index:10; max-width:680px; margin:0 auto; padding:56px 24px 60px; animation:fadeUp 0.7s ease both; }
+    .results-screen.active { display:block; }
+    .results-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:36px; }
+    .results-title { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:500; letter-spacing:3.5px; text-transform:uppercase; color:var(--muted); }
+    .new-search-btn { background:transparent; border:1px solid var(--border); color:var(--text); font-family:'Outfit',sans-serif; font-size:12px; padding:8px 16px; border-radius:8px; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:8px; }
+    .new-search-btn:hover { border-color:var(--accent); color:var(--accent); }
+
+    .location-card { background:var(--surface); border:1px solid var(--border); border-radius:18px; overflow:hidden; margin-bottom:20px; }
+    .location-hero { padding:36px 40px; background:linear-gradient(135deg,rgba(184,46,60,0.08),transparent 70%); border-bottom:1px solid var(--border); display:flex; align-items:center; gap:24px; }
+    .flag-display { font-size:68px; line-height:1; filter:drop-shadow(0 6px 20px rgba(0,0,0,0.4)); }
+    .location-info { flex:1; }
+    .country-name { font-family:'Playfair Display',serif; font-size:34px; font-weight:900; color:var(--white); margin-bottom:4px; }
+    .region-name { font-size:14px; font-weight:300; color:var(--muted); display:flex; align-items:center; gap:6px; }
+
+    .confidence-section { padding:22px 40px; border-bottom:1px solid var(--border); }
+    .confidence-label { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:2.5px; text-transform:uppercase; color:var(--muted); margin-bottom:12px; display:flex; justify-content:space-between; }
+    .confidence-value { font-family:'Playfair Display',serif; font-size:22px; font-weight:800; color:var(--accent-light); }
+    .confidence-bar { height:3px; background:var(--border); border-radius:3px; overflow:hidden; }
+    .confidence-fill { height:100%; background:linear-gradient(90deg,var(--accent),var(--accent-light)); border-radius:3px; transition:width 1.5s cubic-bezier(0.16,1,0.3,1); width:0%; }
+
+    .clues-section { padding:22px 40px; border-bottom:1px solid var(--border); }
+    .section-label { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:2.5px; text-transform:uppercase; color:var(--muted); margin-bottom:14px; }
+    .clues-list { display:flex; flex-wrap:wrap; gap:8px; }
+    .clue-tag { background:var(--accent-subtle); border:1px solid rgba(184,46,60,0.18); color:var(--accent-light); font-size:12px; padding:6px 14px; border-radius:6px; animation:fadeUp 0.5s ease both; }
+
+    .reasoning-section { padding:22px 40px; border-bottom:1px solid var(--border); }
+    .reasoning-text { font-size:13px; font-weight:300; color:var(--muted); line-height:1.9; white-space:pre-wrap; }
+
+    /* Map */
+    .map-section { padding:22px 40px; border-bottom:1px solid var(--border); }
+    .map-container { border-radius:12px; overflow:hidden; border:1px solid var(--border); height:220px; }
+    .map-container iframe { width:100%; height:100%; border:none; filter:grayscale(0.3) contrast(1.1); }
+    .map-coords { margin-top:10px; font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted); display:flex; align-items:center; gap:6px; }
+    .map-coords a { color:var(--accent-light); text-decoration:underline; text-underline-offset:2px; }
+    .map-coords a:hover { color:var(--accent); }
+
+    /* EXIF info in results */
+    .exif-section { padding:22px 40px; }
+    .exif-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
+    .exif-item { background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:10px 12px; }
+    .exif-item-label { font-family:'JetBrains Mono',monospace; font-size:8px; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-bottom:3px; }
+    .exif-item-value { font-size:12px; font-weight:500; color:var(--text); }
+
+    /* History panel */
+    .history-panel { display:none; position:fixed; top:0; right:0; bottom:0; width:360px; background:var(--surface); border-left:1px solid var(--border); z-index:200; animation:slideIn 0.3s ease; overflow-y:auto; }
+    .history-panel.active { display:block; }
+    @keyframes slideIn { from{transform:translateX(100%)} to{transform:translateX(0)} }
+    .history-panel-header { padding:20px 24px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; background:var(--surface); z-index:1; }
+    .history-panel-title { font-family:'Playfair Display',serif; font-size:18px; font-weight:800; color:var(--white); }
+    .history-close { background:none; border:1px solid var(--border); color:var(--text); width:32px; height:32px; border-radius:6px; cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
+    .history-close:hover { border-color:var(--accent); color:var(--accent); }
+    .history-empty { padding:40px 24px; text-align:center; color:var(--muted); font-size:13px; font-weight:300; }
+    .history-item { padding:16px 24px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:14px; cursor:default; transition:background 0.2s; }
+    .history-item:hover { background:rgba(184,46,60,0.04); }
+    .history-thumb { width:48px; height:48px; border-radius:8px; object-fit:cover; border:1px solid var(--border); flex-shrink:0; }
+    .history-details { flex:1; min-width:0; }
+    .history-country { font-weight:600; font-size:14px; color:var(--text); display:flex; align-items:center; gap:6px; }
+    .history-region { font-size:11px; color:var(--muted); font-weight:300; margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .history-date { font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--muted); margin-top:4px; letter-spacing:0.5px; }
+    .history-conf { font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; color:var(--accent-light); flex-shrink:0; }
+    .history-clear { padding:16px 24px; }
+    .history-clear-btn { width:100%; background:none; border:1px solid var(--border); color:var(--muted); font-family:'Outfit',sans-serif; font-size:11px; padding:10px; border-radius:8px; cursor:pointer; transition:all 0.2s; }
+    .history-clear-btn:hover { border-color:var(--accent); color:var(--accent-light); }
+
+    .history-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:190; }
+    .history-overlay.active { display:block; }
+
+    .error-card { background:rgba(184,46,60,0.06); border:1px solid rgba(184,46,60,0.2); border-radius:14px; padding:28px; color:var(--accent-light); font-size:13px; text-align:center; font-weight:300; }
+
+    @media (max-width:600px) {
+      header { padding:14px 18px; }
+      main { padding:44px 16px 40px; }
+      .location-hero { flex-direction:column; align-items:flex-start; gap:14px; padding:24px; }
+      .flag-display { font-size:52px; }
+      .country-name { font-size:26px; }
+      .confidence-section,.clues-section,.reasoning-section,.map-section,.exif-section { padding:18px 22px; }
+      .drop-zone { padding:40px 24px; }
+      .exif-grid { grid-template-columns:1fr 1fr; }
+      .history-panel { width:100%; }
+      .map-container { height:180px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="atmo atmo-1"></div>
+<div class="atmo atmo-2"></div>
+<div class="atmo atmo-3"></div>
+
+<!-- Header -->
+<header>
+  <div class="logo">Where<span class="red">Is</span>This<span class="red">?</span></div>
+  <div class="header-right">
+    <div class="header-badge">AI Geo · Vision</div>
+    <button class="history-btn" id="historyToggle" onclick="toggleHistory()">
+      🕐 History <span class="history-count" id="historyCount">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- History overlay -->
+<div class="history-overlay" id="historyOverlay" onclick="toggleHistory()"></div>
+<div class="history-panel" id="historyPanel">
+  <div class="history-panel-header">
+    <div class="history-panel-title">Search History</div>
+    <button class="history-close" onclick="toggleHistory()">✕</button>
+  </div>
+  <div id="historyList"></div>
+</div>
+
+<!-- Loading -->
+<div class="loading-screen" id="loadingScreen">
+  <div class="scanner">
+    <div class="scanner-ring"></div>
+    <div class="scanner-ring"></div>
+    <div class="scanner-ring"></div>
+    <div class="scanner-dot"></div>
+    <div class="scanner-line"></div>
+  </div>
+  <div class="loading-text">Analyzing image...</div>
+  <div class="loading-sub">Running geo-intelligence scan</div>
+</div>
+
+<!-- Upload -->
+<main id="uploadScreen">
+  <div class="hero">
+    <div class="hero-tag">AI-Powered Geolocation</div>
+    <h1>Welcome!</h1>
+    <p class="subtitle">
+      You don't know where the image is located?<br/>
+      <strong>Don't worry</strong>, upload it in the box below
+      and you'll find out in just a few seconds!
+    </p>
+  </div>
+
+  <div class="upload-section">
+    <div class="step-label"><span class="step-num">01</span> Drop the image</div>
+    <div class="drop-zone" id="dropZone">
+      <input type="file" id="fileInput" accept="image/*" />
+      <div class="drop-icon">🌍</div>
+      <div class="drop-text">Drop your image here</div>
+      <div class="drop-sub">or <span onclick="document.getElementById('fileInput').click()">browse from your device</span></div>
+    </div>
+    <div class="preview-container" id="previewContainer">
+      <img id="previewImg" src="" alt="Preview" />
+      <div class="preview-overlay">
+        <button class="preview-btn" onclick="resetImage()">✕ Remove</button>
+      </div>
+      <div class="exif-badge" id="exifBadge"></div>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <div class="info-header">
+      <div class="step-label" style="margin-bottom:0"><span class="step-num">02</span> Additional Info</div>
+      <span class="optional-tag">optional</span>
+    </div>
+    <textarea id="additionalInfo" placeholder="Any extra clues? e.g. 'I think this is somewhere in Asia' or 'This was taken in summer 2022'..."></textarea>
+  </div>
+
+  <div class="confirm-section">
+    <button class="confirm-btn" id="confirmBtn" onclick="analyzeImage()" disabled>Confirm — Analyze Image</button>
+  </div>
+</main>
+
+<!-- Results -->
+<div class="results-screen" id="resultsScreen">
+  <div class="results-header">
+    <div class="results-title">Analysis Complete</div>
+    <button class="new-search-btn" onclick="resetAll()">← New search</button>
+  </div>
+  <div id="resultsContent"></div>
+</div>
+
+<script>
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+const previewContainer = document.getElementById('previewContainer');
+const previewImg = document.getElementById('previewImg');
+const confirmBtn = document.getElementById('confirmBtn');
+const uploadScreen = document.getElementById('uploadScreen');
+const loadingScreen = document.getElementById('loadingScreen');
+const resultsScreen = document.getElementById('resultsScreen');
+const exifBadge = document.getElementById('exifBadge');
+
+const WEBHOOK_URL = 'https://mattiia17.app.n8n.cloud/webhook/whereisthis';
+
+let currentImageBase64 = null;
+let currentFile = null;
+let extractedMetadata = null;
+
+// ─── EXIF ───
+function extractEXIF(file) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = new Image();
+      img.onload = function() {
+        try {
+          EXIF.getData(img, function() {
+            const tags = EXIF.getAllTags(this);
+            if (!tags || Object.keys(tags).length === 0) return resolve(null);
+            const m = {};
+            if (tags.DateTimeOriginal) m.dateTime = tags.DateTimeOriginal;
+            else if (tags.DateTime) m.dateTime = tags.DateTime;
+            if (tags.Make) m.cameraMake = tags.Make.trim();
+            if (tags.Model) m.cameraModel = tags.Model.trim();
+            if (tags.FNumber) m.aperture = 'f/' + (tags.FNumber.numerator / tags.FNumber.denominator);
+            if (tags.ExposureTime) {
+              const exp = tags.ExposureTime;
+              m.shutter = exp.numerator < exp.denominator ? '1/' + Math.round(exp.denominator / exp.numerator) + 's' : (exp.numerator / exp.denominator) + 's';
+            }
+            if (tags.ISOSpeedRatings) m.iso = 'ISO ' + tags.ISOSpeedRatings;
+            if (tags.FocalLength) m.focalLength = (tags.FocalLength.numerator / tags.FocalLength.denominator) + 'mm';
+            if (tags.GPSLatitude && tags.GPSLongitude) {
+              const lat = dmsToDD(tags.GPSLatitude, tags.GPSLatitudeRef);
+              const lng = dmsToDD(tags.GPSLongitude, tags.GPSLongitudeRef);
+              if (!isNaN(lat) && !isNaN(lng)) { m.lat = lat.toFixed(6); m.lng = lng.toFixed(6); }
+            }
+            if (tags.GPSAltitude) m.altitude = (tags.GPSAltitude.numerator / tags.GPSAltitude.denominator).toFixed(1) + 'm';
+            resolve(Object.keys(m).length > 0 ? m : null);
+          });
+        } catch(e) { resolve(null); }
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function dmsToDD(dms, ref) {
+  if (!dms || dms.length < 3) return NaN;
+  const d = dms[0].numerator / dms[0].denominator;
+  const m = dms[1].numerator / dms[1].denominator;
+  const s = dms[2].numerator / dms[2].denominator;
+  let dd = d + m/60 + s/3600;
+  if (ref === 'S' || ref === 'W') dd *= -1;
+  return dd;
+}
+
+function formatExifDate(dt) {
+  if (!dt) return null;
+  const p = dt.split(' ');
+  return p.length === 2 ? p[0].replace(/:/g, '-') + ' ' + p[1] : dt;
+}
+
+function buildExifContext(meta) {
+  if (!meta) return '';
+  const parts = [];
+  if (meta.lat && meta.lng) parts.push(`GPS coordinates: ${meta.lat}, ${meta.lng}`);
+  if (meta.dateTime) parts.push(`Date/time taken: ${formatExifDate(meta.dateTime)}`);
+  if (meta.cameraMake || meta.cameraModel) parts.push(`Camera: ${[meta.cameraMake, meta.cameraModel].filter(Boolean).join(' ')}`);
+  if (meta.altitude) parts.push(`Altitude: ${meta.altitude}`);
+  return parts.length > 0 ? '\n[EXIF metadata extracted from image: ' + parts.join(' | ') + ']' : '';
+}
+
+// ─── Drag & Drop ───
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('dragover'); const f = e.dataTransfer.files[0]; if (f && f.type.startsWith('image/')) handleFile(f); });
+dropZone.addEventListener('click', () => fileInput.click());
+fileInput.addEventListener('change', e => { if (e.target.files[0]) handleFile(e.target.files[0]); });
+
+async function handleFile(file) {
+  currentFile = file;
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    currentImageBase64 = e.target.result;
+    previewImg.src = currentImageBase64;
+    dropZone.style.display = 'none';
+    previewContainer.style.display = 'block';
+    confirmBtn.disabled = false;
+
+    extractedMetadata = await extractEXIF(file);
+    if (extractedMetadata) {
+      const hasGPS = extractedMetadata.lat && extractedMetadata.lng;
+      exifBadge.textContent = hasGPS ? '📋 EXIF + GPS found' : '📋 EXIF data found';
+      exifBadge.className = 'exif-badge visible';
+    } else {
+      exifBadge.textContent = '📋 No EXIF data';
+      exifBadge.className = 'exif-badge visible no-data';
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+function resetImage() {
+  currentImageBase64 = null; currentFile = null; extractedMetadata = null;
+  fileInput.value = '';
+  previewContainer.style.display = 'none';
+  dropZone.style.display = 'block';
+  confirmBtn.disabled = true;
+  exifBadge.className = 'exif-badge';
+}
+
+function resetAll() {
+  resetImage();
+  document.getElementById('additionalInfo').value = '';
+  resultsScreen.classList.remove('active');
+  uploadScreen.style.display = 'block';
+}
+
+// ─── Analyze ───
+async function analyzeImage() {
+  if (!currentImageBase64) return;
+
+  let additionalInfo = document.getElementById('additionalInfo').value.trim();
+  // Append EXIF context for the AI
+  additionalInfo += buildExifContext(extractedMetadata);
+
+  uploadScreen.style.display = 'none';
+  loadingScreen.classList.add('active');
+
+  try {
+    const resp = await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ image: currentImageBase64, additionalInfo })
+    });
+    const data = await resp.json();
+    loadingScreen.classList.remove('active');
+
+    if (data.success) {
+      saveToHistory(data);
+      showResults(data);
+    } else {
+      showError(data.error || 'Something went wrong.');
+    }
+  } catch(err) {
+    loadingScreen.classList.remove('active');
+    showError('Connection error. Check your internet and try again.');
+  }
+}
+
+// ─── Results ───
+function showResults(data) {
+  const cluesHTML = (data.clues || []).map((c,i) => `<span class="clue-tag" style="animation-delay:${i*0.1}s">${c}</span>`).join('');
+
+  // Map section — use EXIF GPS if available, otherwise try to geocode from country+region
+  let mapHTML = '';
+  const hasExifGPS = extractedMetadata && extractedMetadata.lat && extractedMetadata.lng;
+  if (hasExifGPS) {
+    const lat = extractedMetadata.lat;
+    const lng = extractedMetadata.lng;
+    mapHTML = `
+      <div class="map-section">
+        <div class="section-label">Location on Map (from EXIF GPS)</div>
+        <div class="map-container">
+          <iframe src="https://maps.google.com/maps?q=${lat},${lng}&z=14&output=embed" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="map-coords">📍 ${lat}, ${lng} — <a href="https://www.google.com/maps?q=${lat},${lng}" target="_blank" rel="noopener">Open in Google Maps</a></div>
+      </div>`;
+  } else if (data.region && data.country) {
+    const query = encodeURIComponent(`${data.region}, ${data.country}`);
+    mapHTML = `
+      <div class="map-section">
+        <div class="section-label">Estimated Location on Map</div>
+        <div class="map-container">
+          <iframe src="https://maps.google.com/maps?q=${query}&z=10&output=embed" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="map-coords">📍 ${data.region}, ${data.country} — <a href="https://www.google.com/maps/search/${query}" target="_blank" rel="noopener">Open in Google Maps</a></div>
+      </div>`;
+  }
+
+  // EXIF info display
+  let exifHTML = '';
+  if (extractedMetadata) {
+    const m = extractedMetadata;
+    let items = '';
+    if (m.dateTime) items += `<div class="exif-item"><div class="exif-item-label">Date</div><div class="exif-item-value">${formatExifDate(m.dateTime)}</div></div>`;
+    if (m.cameraMake||m.cameraModel) items += `<div class="exif-item"><div class="exif-item-label">Camera</div><div class="exif-item-value">${[m.cameraMake,m.cameraModel].filter(Boolean).join(' ')}</div></div>`;
+    if (m.aperture) items += `<div class="exif-item"><div class="exif-item-label">Aperture</div><div class="exif-item-value">${m.aperture}</div></div>`;
+    if (m.shutter) items += `<div class="exif-item"><div class="exif-item-label">Shutter</div><div class="exif-item-value">${m.shutter}</div></div>`;
+    if (m.iso) items += `<div class="exif-item"><div class="exif-item-label">ISO</div><div class="exif-item-value">${m.iso}</div></div>`;
+    if (m.focalLength) items += `<div class="exif-item"><div class="exif-item-label">Focal</div><div class="exif-item-value">${m.focalLength}</div></div>`;
+    if (m.altitude) items += `<div class="exif-item"><div class="exif-item-label">Altitude</div><div class="exif-item-value">${m.altitude}</div></div>`;
+    if (items) {
+      exifHTML = `
+        <div class="exif-section">
+          <div class="section-label">Image Metadata (EXIF)</div>
+          <div class="exif-grid">${items}</div>
+        </div>`;
+    }
+  }
+
+  document.getElementById('resultsContent').innerHTML = `
+    <div class="location-card">
+      <div class="location-hero">
+        <div class="flag-display">${data.flag || '🌍'}</div>
+        <div class="location-info">
+          <div class="country-name">${data.country || 'Unknown'}</div>
+          <div class="region-name"><span class="pin">📍</span> ${data.region || 'Unknown region'}</div>
+        </div>
+      </div>
+      <div class="confidence-section">
+        <div class="confidence-label"><span>Confidence Level</span><span class="confidence-value">${data.confidence||0}%</span></div>
+        <div class="confidence-bar"><div class="confidence-fill" id="confidenceFill"></div></div>
+      </div>
+      ${cluesHTML ? `<div class="clues-section"><div class="section-label">Visual Clues Detected</div><div class="clues-list">${cluesHTML}</div></div>` : ''}
+      <div class="reasoning-section"><div class="section-label">AI Reasoning</div><div class="reasoning-text">${data.reasoning||'No reasoning provided.'}</div></div>
+      ${mapHTML}
+      ${exifHTML}
+    </div>`;
+
+  resultsScreen.classList.add('active');
+  setTimeout(() => { const f = document.getElementById('confidenceFill'); if(f) f.style.width = `${data.confidence||0}%`; }, 300);
+}
+
+function showError(msg) {
+  document.getElementById('resultsContent').innerHTML = `<div class="error-card">⚠️ ${msg}</div>`;
+  resultsScreen.classList.add('active');
+}
+
+// ─── History ───
+function getHistory() {
+  try { return JSON.parse(localStorage.getItem('wit_history') || '[]'); } catch { return []; }
+}
+
+function saveToHistory(data) {
+  const history = getHistory();
+  // Create small thumbnail
+  let thumb = '';
+  if (currentImageBase64) {
+    try {
+      const canvas = document.createElement('canvas');
+      const img = new Image();
+      img.src = currentImageBase64;
+      canvas.width = 96; canvas.height = 96;
+      const ctx = canvas.getContext('2d');
+      const size = Math.min(img.naturalWidth || 200, img.naturalHeight || 200);
+      ctx.drawImage(img, 0, 0, size, size, 0, 0, 96, 96);
+      thumb = canvas.toDataURL('image/jpeg', 0.5);
+    } catch { thumb = ''; }
+  }
+
+  history.unshift({
+    country: data.country || 'Unknown',
+    region: data.region || '',
+    flag: data.flag || '🌍',
+    confidence: data.confidence || 0,
+    thumb,
+    date: new Date().toISOString()
+  });
+
+  // Keep last 20
+  if (history.length > 20) history.length = 20;
+  localStorage.setItem('wit_history', JSON.stringify(history));
+  updateHistoryCount();
+}
+
+function updateHistoryCount() {
+  const count = getHistory().length;
+  document.getElementById('historyCount').textContent = count;
+}
+
+function toggleHistory() {
+  const panel = document.getElementById('historyPanel');
+  const overlay = document.getElementById('historyOverlay');
+  const isOpen = panel.classList.contains('active');
+  if (isOpen) {
+    panel.classList.remove('active');
+    overlay.classList.remove('active');
+  } else {
+    renderHistory();
+    panel.classList.add('active');
+    overlay.classList.add('active');
+  }
+}
+
+function renderHistory() {
+  const history = getHistory();
+  const list = document.getElementById('historyList');
+  if (history.length === 0) {
+    list.innerHTML = '<div class="history-empty">No searches yet.<br/>Your search history will appear here.</div>';
+    return;
+  }
+  let html = '';
+  history.forEach(h => {
+    const d = new Date(h.date);
+    const dateStr = d.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }) + ' · ' + d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
+    html += `
+      <div class="history-item">
+        ${h.thumb ? `<img class="history-thumb" src="${h.thumb}" alt="" />` : '<div class="history-thumb" style="background:var(--bg);display:flex;align-items:center;justify-content:center;">🌍</div>'}
+        <div class="history-details">
+          <div class="history-country">${h.flag} ${h.country}</div>
+          <div class="history-region">${h.region}</div>
+          <div class="history-date">${dateStr}</div>
+        </div>
+        <div class="history-conf">${h.confidence}%</div>
+      </div>`;
+  });
+  html += `<div class="history-clear"><button class="history-clear-btn" onclick="clearHistory()">Clear all history</button></div>`;
+  list.innerHTML = html;
+}
+
+function clearHistory() {
+  localStorage.removeItem('wit_history');
+  updateHistoryCount();
+  renderHistory();
+}
+
+// Init
+updateHistoryCount();
+</script>
+</body>
+</html>
