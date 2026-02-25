@@ -19,203 +19,227 @@
       --success: #4ecb8d;
       --white: #ffffff;
     }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { background:var(--bg); color:var(--text); font-family:'Outfit',sans-serif; min-height:100vh; overflow-x:hidden; }
-    body::before { content:''; position:fixed; inset:0; background-image:radial-gradient(circle at 1px 1px,rgba(184,46,60,0.03) 1px,transparent 0); background-size:48px 48px; pointer-events:none; z-index:0; }
-
-    .atmo { position:fixed; border-radius:50%; filter:blur(140px); pointer-events:none; z-index:0; }
-    .atmo-1 { width:700px; height:700px; background:var(--accent); opacity:0.06; top:-300px; left:-200px; animation:drift 25s ease-in-out infinite alternate; }
-    .atmo-2 { width:500px; height:500px; background:var(--accent); opacity:0.04; bottom:-200px; right:-150px; animation:drift 25s ease-in-out infinite alternate-reverse; }
-    .atmo-3 { width:300px; height:300px; background:var(--accent-light); opacity:0.03; top:40%; left:50%; animation:drift 20s ease-in-out infinite alternate; }
-    @keyframes drift { from{transform:translate(0,0) scale(1)} to{transform:translate(30px,20px) scale(1.08)} }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;min-height:100vh;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle at 1px 1px,rgba(184,46,60,0.03) 1px,transparent 0);background-size:48px 48px;pointer-events:none;z-index:0}
+    .atmo{position:fixed;border-radius:50%;filter:blur(140px);pointer-events:none;z-index:0}
+    .atmo-1{width:700px;height:700px;background:var(--accent);opacity:0.06;top:-300px;left:-200px;animation:drift 25s ease-in-out infinite alternate}
+    .atmo-2{width:500px;height:500px;background:var(--accent);opacity:0.04;bottom:-200px;right:-150px;animation:drift 25s ease-in-out infinite alternate-reverse}
+    .atmo-3{width:300px;height:300px;background:var(--accent-light);opacity:0.03;top:40%;left:50%;animation:drift 20s ease-in-out infinite alternate}
+    @keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(30px,20px) scale(1.08)}}
 
     /* Header */
-    header { position:relative; z-index:10; padding:20px 40px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border); backdrop-filter:blur(12px); background:rgba(11,10,13,0.6); }
-    .logo { font-family:'Playfair Display',serif; font-weight:900; font-size:22px; color:var(--white); user-select:none; }
-    .logo .red { color:var(--accent); }
-    .header-right { display:flex; align-items:center; gap:12px; }
-    .header-badge { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:500; color:var(--muted); letter-spacing:2.5px; text-transform:uppercase; border:1px solid var(--border); padding:6px 14px; border-radius:4px; background:rgba(184,46,60,0.04); }
-    .history-btn { background:transparent; border:1px solid var(--border); color:var(--muted); font-family:'JetBrains Mono',monospace; font-size:10px; padding:6px 12px; border-radius:4px; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:5px; letter-spacing:1px; }
-    .history-btn:hover { border-color:var(--accent); color:var(--accent-light); }
-    .history-count { background:var(--accent); color:var(--white); font-size:9px; padding:1px 5px; border-radius:3px; font-weight:500; }
+    header{position:relative;z-index:10;padding:20px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);backdrop-filter:blur(12px);background:rgba(11,10,13,0.6)}
+    .logo{font-family:'Playfair Display',serif;font-weight:900;font-size:22px;color:var(--white);user-select:none;cursor:pointer;text-decoration:none}
+    .logo .red{color:var(--accent)}
+    .header-right{display:flex;align-items:center;gap:12px}
+    .header-badge{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;color:var(--muted);letter-spacing:2.5px;text-transform:uppercase;border:1px solid var(--border);padding:6px 14px;border-radius:4px;background:rgba(184,46,60,0.04);cursor:pointer;transition:all 0.2s}
+    .header-badge:hover{border-color:var(--accent);color:var(--accent-light)}
+    .history-btn{background:transparent;border:1px solid var(--border);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;padding:6px 12px;border-radius:4px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:5px;letter-spacing:1px}
+    .history-btn:hover{border-color:var(--accent);color:var(--accent-light)}
+    .history-count{background:var(--accent);color:var(--white);font-size:9px;padding:1px 5px;border-radius:3px;font-weight:500}
 
     /* Main */
-    main { position:relative; z-index:10; max-width:680px; margin:0 auto; padding:72px 24px 60px; }
+    main{position:relative;z-index:10;max-width:680px;margin:0 auto;padding:72px 24px 60px}
+    .hero{text-align:center;margin-bottom:56px;animation:fadeUp 0.7s ease both}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .hero-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3.5px;text-transform:uppercase;color:var(--accent);margin-bottom:24px;display:flex;align-items:center;justify-content:center;gap:12px}
+    .hero-tag::before,.hero-tag::after{content:'';width:32px;height:1px;background:var(--accent);opacity:0.35}
+    h1{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(44px,9vw,76px);line-height:1;letter-spacing:-2px;color:var(--white);margin-bottom:24px}
+    .subtitle{font-size:15px;font-weight:300;color:var(--muted);line-height:1.8;max-width:440px;margin:0 auto}
+    .subtitle strong{color:var(--text);font-weight:600}
 
-    /* Hero */
-    .hero { text-align:center; margin-bottom:56px; animation:fadeUp 0.7s ease both; }
-    @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-    .hero-tag { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:3.5px; text-transform:uppercase; color:var(--accent); margin-bottom:24px; display:flex; align-items:center; justify-content:center; gap:12px; }
-    .hero-tag::before,.hero-tag::after { content:''; width:32px; height:1px; background:var(--accent); opacity:0.35; }
-    h1 { font-family:'Playfair Display',serif; font-weight:900; font-size:clamp(44px,9vw,76px); line-height:1; letter-spacing:-2px; color:var(--white); margin-bottom:24px; }
-    .subtitle { font-size:15px; font-weight:300; color:var(--muted); line-height:1.8; max-width:440px; margin:0 auto; }
-    .subtitle strong { color:var(--text); font-weight:600; }
+    /* Language selector */
+    .lang-section{display:flex;justify-content:center;margin-bottom:40px;animation:fadeUp 0.7s ease 0.1s both}
+    .lang-select-wrap{position:relative;display:inline-flex;align-items:center;gap:8px}
+    .lang-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+    .lang-select{background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:'Outfit',sans-serif;font-size:12px;font-weight:400;padding:7px 32px 7px 12px;border-radius:8px;cursor:pointer;appearance:none;-webkit-appearance:none;transition:all 0.2s;outline:none}
+    .lang-select:hover,.lang-select:focus{border-color:var(--accent)}
+    .lang-arrow{position:absolute;right:10px;pointer-events:none;color:var(--muted);font-size:10px}
 
     /* Upload */
-    .upload-section { animation:fadeUp 0.7s ease 0.15s both; }
-    .step-label { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:2.5px; text-transform:uppercase; color:var(--muted); margin-bottom:12px; display:flex; align-items:center; gap:10px; }
-    .step-num { color:var(--accent); font-weight:500; }
-
-    .drop-zone { border:1px dashed var(--border); border-radius:14px; padding:56px 40px; text-align:center; cursor:pointer; transition:all 0.35s; background:var(--surface); position:relative; overflow:hidden; }
-    .drop-zone::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at center,var(--accent-subtle) 0%,transparent 70%); opacity:0; transition:opacity 0.35s; }
-    .drop-zone:hover::before,.drop-zone.dragover::before { opacity:1; }
-    .drop-zone:hover,.drop-zone.dragover { border-color:var(--accent); border-style:solid; box-shadow:0 0 0 1px var(--accent),0 24px 64px rgba(184,46,60,0.08); }
-    .drop-icon { width:52px; height:52px; border:1px solid var(--border); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 18px; font-size:22px; background:var(--bg); transition:all 0.35s; }
-    .drop-zone:hover .drop-icon { border-color:var(--accent); transform:translateY(-3px); box-shadow:0 8px 24px rgba(184,46,60,0.15); }
-    .drop-text { font-family:'Playfair Display',serif; font-size:17px; font-weight:700; color:var(--text); margin-bottom:6px; }
-    .drop-sub { font-size:12px; font-weight:300; color:var(--muted); }
-    .drop-sub span { color:var(--accent-light); cursor:pointer; text-decoration:underline; text-underline-offset:3px; }
-    input[type="file"] { display:none; }
-
-    .preview-container { display:none; position:relative; border-radius:14px; overflow:hidden; border:1px solid var(--border); background:var(--surface); }
-    .preview-container img { width:100%; max-height:340px; object-fit:cover; display:block; }
-    .preview-overlay { position:absolute; top:12px; right:12px; }
-    .preview-btn { background:rgba(11,10,13,0.85); border:1px solid var(--border); color:var(--text); font-family:'JetBrains Mono',monospace; font-size:11px; padding:7px 14px; border-radius:6px; cursor:pointer; backdrop-filter:blur(12px); transition:all 0.2s; }
-    .preview-btn:hover { border-color:var(--accent); color:var(--accent); }
-
-    .exif-badge { position:absolute; bottom:12px; left:12px; background:rgba(11,10,13,0.85); border:1px solid var(--border); color:var(--success); font-family:'JetBrains Mono',monospace; font-size:10px; padding:5px 10px; border-radius:5px; backdrop-filter:blur(12px); display:none; align-items:center; gap:5px; }
-    .exif-badge.visible { display:flex; }
-    .exif-badge.no-data { color:var(--muted); }
+    .upload-section{animation:fadeUp 0.7s ease 0.15s both}
+    .step-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+    .step-num{color:var(--accent);font-weight:500}
+    .drop-zone{border:1px dashed var(--border);border-radius:14px;padding:56px 40px;text-align:center;cursor:pointer;transition:all 0.35s;background:var(--surface);position:relative;overflow:hidden}
+    .drop-zone::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,var(--accent-subtle) 0%,transparent 70%);opacity:0;transition:opacity 0.35s}
+    .drop-zone:hover::before,.drop-zone.dragover::before{opacity:1}
+    .drop-zone:hover,.drop-zone.dragover{border-color:var(--accent);border-style:solid;box-shadow:0 0 0 1px var(--accent),0 24px 64px rgba(184,46,60,0.08)}
+    .drop-icon{width:52px;height:52px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:22px;background:var(--bg);transition:all 0.35s}
+    .drop-zone:hover .drop-icon{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 24px rgba(184,46,60,0.15)}
+    .drop-text{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--text);margin-bottom:6px}
+    .drop-sub{font-size:12px;font-weight:300;color:var(--muted)}
+    .drop-sub span{color:var(--accent-light);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+    input[type="file"]{display:none}
+    .preview-container{display:none;position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--border);background:var(--surface)}
+    .preview-container img{width:100%;max-height:340px;object-fit:cover;display:block}
+    .preview-overlay{position:absolute;top:12px;right:12px}
+    .preview-btn{background:rgba(11,10,13,0.85);border:1px solid var(--border);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:11px;padding:7px 14px;border-radius:6px;cursor:pointer;backdrop-filter:blur(12px);transition:all 0.2s}
+    .preview-btn:hover{border-color:var(--accent);color:var(--accent)}
 
     /* Info */
-    .info-section { margin-top:20px; animation:fadeUp 0.7s ease 0.25s both; }
-    .info-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
-    .optional-tag { font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; border:1px solid var(--border); padding:3px 8px; border-radius:3px; }
-    textarea { width:100%; background:var(--surface); border:1px solid var(--border); border-radius:14px; color:var(--text); font-family:'Outfit',sans-serif; font-size:13px; font-weight:300; padding:16px 20px; resize:none; height:88px; transition:all 0.3s; line-height:1.6; }
-    textarea::placeholder { color:var(--muted); }
-    textarea:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 1px var(--accent); }
+    .info-section{margin-top:20px;animation:fadeUp 0.7s ease 0.25s both}
+    .info-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+    .optional-tag{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;border:1px solid var(--border);padding:3px 8px;border-radius:3px}
+    textarea{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:14px;color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;font-weight:300;padding:16px 20px;resize:none;height:88px;transition:all 0.3s;line-height:1.6}
+    textarea::placeholder{color:var(--muted)}
+    textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
 
     /* Confirm */
-    .confirm-section { margin-top:28px; animation:fadeUp 0.7s ease 0.35s both; }
-    .confirm-btn { width:100%; background:var(--accent); color:var(--white); border:none; border-radius:14px; font-family:'Outfit',sans-serif; font-weight:600; font-size:15px; letter-spacing:1.5px; text-transform:uppercase; padding:18px; cursor:pointer; transition:all 0.3s; position:relative; overflow:hidden; }
-    .confirm-btn::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,transparent 30%,rgba(255,255,255,0.08)); opacity:0; transition:opacity 0.3s; }
-    .confirm-btn:hover::before { opacity:1; }
-    .confirm-btn:hover { transform:translateY(-2px); box-shadow:0 16px 48px var(--accent-glow); }
-    .confirm-btn:active { transform:translateY(0); }
-    .confirm-btn:disabled { opacity:0.35; cursor:not-allowed; transform:none; box-shadow:none; }
+    .confirm-section{margin-top:28px;animation:fadeUp 0.7s ease 0.35s both}
+    .confirm-btn{width:100%;background:var(--accent);color:var(--white);border:none;border-radius:14px;font-family:'Outfit',sans-serif;font-weight:600;font-size:15px;letter-spacing:1.5px;text-transform:uppercase;padding:18px;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden}
+    .confirm-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 30%,rgba(255,255,255,0.08));opacity:0;transition:opacity 0.3s}
+    .confirm-btn:hover::before{opacity:1}
+    .confirm-btn:hover{transform:translateY(-2px);box-shadow:0 16px 48px var(--accent-glow)}
+    .confirm-btn:active{transform:translateY(0)}
+    .confirm-btn:disabled{opacity:0.35;cursor:not-allowed;transform:none;box-shadow:none}
 
     /* Loading */
-    .loading-screen { display:none; position:fixed; inset:0; background:var(--bg); z-index:100; align-items:center; justify-content:center; flex-direction:column; gap:28px; }
-    .loading-screen.active { display:flex; }
-    .scanner { width:160px; height:160px; position:relative; }
-    .scanner-ring { position:absolute; inset:0; border-radius:50%; border:1px solid var(--accent); opacity:0.3; animation:scanPulse 2.2s ease-in-out infinite; }
-    .scanner-ring:nth-child(2) { inset:18px; animation-delay:0.35s; border-color:var(--accent-light); }
-    .scanner-ring:nth-child(3) { inset:36px; animation-delay:0.7s; opacity:0.5; }
-    @keyframes scanPulse { 0%,100%{opacity:0.15;transform:scale(1)} 50%{opacity:0.8;transform:scale(1.04)} }
-    .scanner-dot { position:absolute; inset:50%; width:8px; height:8px; margin:-4px; background:var(--accent); border-radius:50%; box-shadow:0 0 24px var(--accent); animation:dotPulse 1.2s ease-in-out infinite; }
-    @keyframes dotPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.5)} }
-    .scanner-line { position:absolute; top:50%; left:10px; right:10px; height:1px; background:linear-gradient(90deg,transparent,var(--accent),transparent); animation:scanLine 2.2s linear infinite; }
-    @keyframes scanLine { 0%{transform:translateY(-65px);opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{transform:translateY(65px);opacity:0} }
-    .loading-text { font-family:'Playfair Display',serif; font-size:20px; font-weight:700; color:var(--text); }
-    .loading-sub { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:3px; text-transform:uppercase; animation:blink 1.8s ease-in-out infinite; }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+    .loading-screen{display:none;position:fixed;inset:0;background:var(--bg);z-index:100;align-items:center;justify-content:center;flex-direction:column;gap:28px}
+    .loading-screen.active{display:flex}
+    .scanner{width:160px;height:160px;position:relative}
+    .scanner-ring{position:absolute;inset:0;border-radius:50%;border:1px solid var(--accent);opacity:0.3;animation:scanPulse 2.2s ease-in-out infinite}
+    .scanner-ring:nth-child(2){inset:18px;animation-delay:0.35s;border-color:var(--accent-light)}
+    .scanner-ring:nth-child(3){inset:36px;animation-delay:0.7s;opacity:0.5}
+    @keyframes scanPulse{0%,100%{opacity:0.15;transform:scale(1)}50%{opacity:0.8;transform:scale(1.04)}}
+    .scanner-dot{position:absolute;inset:50%;width:8px;height:8px;margin:-4px;background:var(--accent);border-radius:50%;box-shadow:0 0 24px var(--accent);animation:dotPulse 1.2s ease-in-out infinite}
+    @keyframes dotPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.5)}}
+    .scanner-line{position:absolute;top:50%;left:10px;right:10px;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);animation:scanLine 2.2s linear infinite}
+    @keyframes scanLine{0%{transform:translateY(-65px);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(65px);opacity:0}}
+    .loading-text{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--text)}
+    .loading-sub{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;animation:blink 1.8s ease-in-out infinite}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:0.25}}
 
     /* Results */
-    .results-screen { display:none; position:relative; z-index:10; max-width:680px; margin:0 auto; padding:56px 24px 60px; animation:fadeUp 0.7s ease both; }
-    .results-screen.active { display:block; }
-    .results-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:36px; }
-    .results-title { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:500; letter-spacing:3.5px; text-transform:uppercase; color:var(--muted); }
-    .new-search-btn { background:transparent; border:1px solid var(--border); color:var(--text); font-family:'Outfit',sans-serif; font-size:12px; padding:8px 16px; border-radius:8px; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:8px; }
-    .new-search-btn:hover { border-color:var(--accent); color:var(--accent); }
+    .results-screen{display:none;position:relative;z-index:10;max-width:680px;margin:0 auto;padding:56px 24px 60px;animation:fadeUp 0.7s ease both}
+    .results-screen.active{display:block}
+    .results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px}
+    .results-title{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:3.5px;text-transform:uppercase;color:var(--muted)}
+    .results-actions{display:flex;gap:8px}
+    .new-search-btn,.share-btn{background:transparent;border:1px solid var(--border);color:var(--text);font-family:'Outfit',sans-serif;font-size:12px;padding:8px 16px;border-radius:8px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+    .new-search-btn:hover,.share-btn:hover{border-color:var(--accent);color:var(--accent)}
+    .share-btn.copied{border-color:var(--success);color:var(--success)}
 
-    .location-card { background:var(--surface); border:1px solid var(--border); border-radius:18px; overflow:hidden; margin-bottom:20px; }
-    .location-hero { padding:36px 40px; background:linear-gradient(135deg,rgba(184,46,60,0.08),transparent 70%); border-bottom:1px solid var(--border); display:flex; align-items:center; gap:24px; }
-    .flag-display { font-size:68px; line-height:1; filter:drop-shadow(0 6px 20px rgba(0,0,0,0.4)); }
-    .location-info { flex:1; }
-    .country-name { font-family:'Playfair Display',serif; font-size:34px; font-weight:900; color:var(--white); margin-bottom:4px; }
-    .region-name { font-size:14px; font-weight:300; color:var(--muted); display:flex; align-items:center; gap:6px; }
+    .location-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:20px}
+    .location-hero{padding:36px 40px;background:linear-gradient(135deg,rgba(184,46,60,0.08),transparent 70%);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:24px}
+    .flag-display{font-size:68px;line-height:1;filter:drop-shadow(0 6px 20px rgba(0,0,0,0.4))}
+    .location-info{flex:1}
+    .country-name{font-family:'Playfair Display',serif;font-size:34px;font-weight:900;color:var(--white);margin-bottom:4px}
+    .region-name{font-size:14px;font-weight:300;color:var(--muted);display:flex;align-items:center;gap:6px}
 
-    .confidence-section { padding:22px 40px; border-bottom:1px solid var(--border); }
-    .confidence-label { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:2.5px; text-transform:uppercase; color:var(--muted); margin-bottom:12px; display:flex; justify-content:space-between; }
-    .confidence-value { font-family:'Playfair Display',serif; font-size:22px; font-weight:800; color:var(--accent-light); }
-    .confidence-bar { height:3px; background:var(--border); border-radius:3px; overflow:hidden; }
-    .confidence-fill { height:100%; background:linear-gradient(90deg,var(--accent),var(--accent-light)); border-radius:3px; transition:width 1.5s cubic-bezier(0.16,1,0.3,1); width:0%; }
+    .confidence-section{padding:22px 40px;border-bottom:1px solid var(--border)}
+    .confidence-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;display:flex;justify-content:space-between}
+    .confidence-value{font-family:'Playfair Display',serif;font-size:22px;font-weight:800;color:var(--accent-light)}
+    .confidence-bar{height:3px;background:var(--border);border-radius:3px;overflow:hidden}
+    .confidence-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-light));border-radius:3px;transition:width 1.5s cubic-bezier(0.16,1,0.3,1);width:0%}
 
-    .clues-section { padding:22px 40px; border-bottom:1px solid var(--border); }
-    .section-label { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:2.5px; text-transform:uppercase; color:var(--muted); margin-bottom:14px; }
-    .clues-list { display:flex; flex-wrap:wrap; gap:8px; }
-    .clue-tag { background:var(--accent-subtle); border:1px solid rgba(184,46,60,0.18); color:var(--accent-light); font-size:12px; padding:6px 14px; border-radius:6px; animation:fadeUp 0.5s ease both; }
+    .clues-section{padding:22px 40px;border-bottom:1px solid var(--border)}
+    .section-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+    .clues-list{display:flex;flex-wrap:wrap;gap:8px}
+    .clue-tag{background:var(--accent-subtle);border:1px solid rgba(184,46,60,0.18);color:var(--accent-light);font-size:12px;padding:6px 14px;border-radius:6px;animation:fadeUp 0.5s ease both}
 
-    .reasoning-section { padding:22px 40px; border-bottom:1px solid var(--border); }
-    .reasoning-text { font-size:13px; font-weight:300; color:var(--muted); line-height:1.9; white-space:pre-wrap; }
+    .reasoning-section{padding:22px 40px;border-bottom:1px solid var(--border)}
+    .reasoning-text{font-size:13px;font-weight:300;color:var(--muted);line-height:1.9;white-space:pre-wrap;min-height:40px}
+    .typing-cursor{display:inline-block;width:2px;height:14px;background:var(--accent);margin-left:2px;animation:cursorBlink 0.6s infinite}
+    @keyframes cursorBlink{0%,100%{opacity:1}50%{opacity:0}}
 
     /* Map */
-    .map-section { padding:22px 40px; border-bottom:1px solid var(--border); }
-    .map-container { border-radius:12px; overflow:hidden; border:1px solid var(--border); height:220px; }
-    .map-container iframe { width:100%; height:100%; border:none; filter:grayscale(0.3) contrast(1.1); }
-    .map-coords { margin-top:10px; font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted); display:flex; align-items:center; gap:6px; }
-    .map-coords a { color:var(--accent-light); text-decoration:underline; text-underline-offset:2px; }
-    .map-coords a:hover { color:var(--accent); }
+    .map-section{padding:22px 40px;border-bottom:1px solid var(--border)}
+    .map-container{border-radius:12px;overflow:hidden;border:1px solid var(--border);height:220px}
+    .map-container iframe{width:100%;height:100%;border:none;filter:grayscale(0.3) contrast(1.1)}
+    .map-coords{margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);display:flex;align-items:center;gap:6px}
+    .map-coords a{color:var(--accent-light);text-decoration:underline;text-underline-offset:2px}
+    .map-coords a:hover{color:var(--accent)}
 
-    /* EXIF info in results */
-    .exif-section { padding:22px 40px; }
-    .exif-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
-    .exif-item { background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:10px 12px; }
-    .exif-item-label { font-family:'JetBrains Mono',monospace; font-size:8px; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-bottom:3px; }
-    .exif-item-value { font-size:12px; font-weight:500; color:var(--text); }
+    /* Metadata download */
+    .meta-download-section{padding:22px 40px}
+    .meta-download-row{display:flex;align-items:center;justify-content:space-between}
+    .meta-download-label{font-size:12px;color:var(--muted);font-weight:300}
+    .meta-download-btn{background:transparent;border:1px solid var(--accent);color:var(--accent-light);font-family:'Outfit',sans-serif;font-weight:500;font-size:12px;padding:8px 18px;border-radius:8px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+    .meta-download-btn:hover{background:var(--accent-subtle);transform:translateY(-1px)}
+    .meta-download-btn:disabled{opacity:0.3;cursor:not-allowed;transform:none}
+    .meta-none{font-size:12px;color:var(--muted);font-weight:300;font-style:italic}
+
+    /* Info modal */
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:300;align-items:center;justify-content:center}
+    .modal-overlay.active{display:flex}
+    .modal-box{background:var(--surface);border:1px solid var(--border);border-radius:18px;max-width:480px;width:90%;padding:36px;animation:fadeUp 0.4s ease}
+    .modal-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:800;color:var(--white);margin-bottom:16px}
+    .modal-text{font-size:14px;font-weight:300;color:var(--muted);line-height:1.8;margin-bottom:24px}
+    .modal-text strong{color:var(--text);font-weight:500}
+    .modal-close{background:var(--accent);color:var(--white);border:none;font-family:'Outfit',sans-serif;font-weight:600;font-size:13px;padding:12px 28px;border-radius:10px;cursor:pointer;transition:all 0.2s}
+    .modal-close:hover{transform:translateY(-1px);box-shadow:0 8px 24px var(--accent-glow)}
 
     /* History panel */
-    .history-panel { display:none; position:fixed; top:0; right:0; bottom:0; width:360px; background:var(--surface); border-left:1px solid var(--border); z-index:200; animation:slideIn 0.3s ease; overflow-y:auto; }
-    .history-panel.active { display:block; }
-    @keyframes slideIn { from{transform:translateX(100%)} to{transform:translateX(0)} }
-    .history-panel-header { padding:20px 24px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; background:var(--surface); z-index:1; }
-    .history-panel-title { font-family:'Playfair Display',serif; font-size:18px; font-weight:800; color:var(--white); }
-    .history-close { background:none; border:1px solid var(--border); color:var(--text); width:32px; height:32px; border-radius:6px; cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
-    .history-close:hover { border-color:var(--accent); color:var(--accent); }
-    .history-empty { padding:40px 24px; text-align:center; color:var(--muted); font-size:13px; font-weight:300; }
-    .history-item { padding:16px 24px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:14px; cursor:default; transition:background 0.2s; }
-    .history-item:hover { background:rgba(184,46,60,0.04); }
-    .history-thumb { width:48px; height:48px; border-radius:8px; object-fit:cover; border:1px solid var(--border); flex-shrink:0; }
-    .history-details { flex:1; min-width:0; }
-    .history-country { font-weight:600; font-size:14px; color:var(--text); display:flex; align-items:center; gap:6px; }
-    .history-region { font-size:11px; color:var(--muted); font-weight:300; margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-    .history-date { font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--muted); margin-top:4px; letter-spacing:0.5px; }
-    .history-conf { font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; color:var(--accent-light); flex-shrink:0; }
-    .history-clear { padding:16px 24px; }
-    .history-clear-btn { width:100%; background:none; border:1px solid var(--border); color:var(--muted); font-family:'Outfit',sans-serif; font-size:11px; padding:10px; border-radius:8px; cursor:pointer; transition:all 0.2s; }
-    .history-clear-btn:hover { border-color:var(--accent); color:var(--accent-light); }
+    .history-panel{display:none;position:fixed;top:0;right:0;bottom:0;width:360px;background:var(--surface);border-left:1px solid var(--border);z-index:200;animation:slideIn 0.3s ease;overflow-y:auto}
+    .history-panel.active{display:block}
+    @keyframes slideIn{from{transform:translateX(100%)}to{transform:translateX(0)}}
+    .history-panel-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--surface);z-index:1}
+    .history-panel-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:800;color:var(--white)}
+    .history-close{background:none;border:1px solid var(--border);color:var(--text);width:32px;height:32px;border-radius:6px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
+    .history-close:hover{border-color:var(--accent);color:var(--accent)}
+    .history-empty{padding:40px 24px;text-align:center;color:var(--muted);font-size:13px;font-weight:300}
+    .history-item{padding:16px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px;transition:background 0.2s}
+    .history-item:hover{background:rgba(184,46,60,0.04)}
+    .history-thumb{width:48px;height:48px;border-radius:8px;object-fit:cover;border:1px solid var(--border);flex-shrink:0}
+    .history-details{flex:1;min-width:0}
+    .history-country{font-weight:600;font-size:14px;color:var(--text);display:flex;align-items:center;gap:6px}
+    .history-region{font-size:11px;color:var(--muted);font-weight:300;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .history-date{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);margin-top:4px}
+    .history-conf{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;color:var(--accent-light);flex-shrink:0}
+    .history-clear{padding:16px 24px}
+    .history-clear-btn{width:100%;background:none;border:1px solid var(--border);color:var(--muted);font-family:'Outfit',sans-serif;font-size:11px;padding:10px;border-radius:8px;cursor:pointer;transition:all 0.2s}
+    .history-clear-btn:hover{border-color:var(--accent);color:var(--accent-light)}
+    .history-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:190}
+    .history-overlay.active{display:block}
 
-    .history-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:190; }
-    .history-overlay.active { display:block; }
+    .error-card{background:rgba(184,46,60,0.06);border:1px solid rgba(184,46,60,0.2);border-radius:14px;padding:28px;color:var(--accent-light);font-size:13px;text-align:center;font-weight:300}
 
-    .error-card { background:rgba(184,46,60,0.06); border:1px solid rgba(184,46,60,0.2); border-radius:14px; padding:28px; color:var(--accent-light); font-size:13px; text-align:center; font-weight:300; }
-
-    @media (max-width:600px) {
-      header { padding:14px 18px; }
-      main { padding:44px 16px 40px; }
-      .location-hero { flex-direction:column; align-items:flex-start; gap:14px; padding:24px; }
-      .flag-display { font-size:52px; }
-      .country-name { font-size:26px; }
-      .confidence-section,.clues-section,.reasoning-section,.map-section,.exif-section { padding:18px 22px; }
-      .drop-zone { padding:40px 24px; }
-      .exif-grid { grid-template-columns:1fr 1fr; }
-      .history-panel { width:100%; }
-      .map-container { height:180px; }
+    @media(max-width:600px){
+      header{padding:14px 18px}
+      main{padding:44px 16px 40px}
+      .location-hero{flex-direction:column;align-items:flex-start;gap:14px;padding:24px}
+      .flag-display{font-size:52px}
+      .country-name{font-size:26px}
+      .confidence-section,.clues-section,.reasoning-section,.map-section,.meta-download-section{padding:18px 22px}
+      .drop-zone{padding:40px 24px}
+      .history-panel{width:100%}
+      .map-container{height:180px}
+      .results-actions{flex-wrap:wrap}
     }
   </style>
 </head>
 <body>
-
 <div class="atmo atmo-1"></div>
 <div class="atmo atmo-2"></div>
 <div class="atmo atmo-3"></div>
 
-<!-- Header -->
 <header>
-  <div class="logo">Where<span class="red">Is</span>This<span class="red">?</span></div>
+  <a class="logo" onclick="goHome()">Where<span class="red">Is</span>This<span class="red">?</span></a>
   <div class="header-right">
-    <div class="header-badge">AI Geo · Vision</div>
-    <button class="history-btn" id="historyToggle" onclick="toggleHistory()">
-      🕐 History <span class="history-count" id="historyCount">0</span>
-    </button>
+    <div class="header-badge" onclick="openInfoModal()">AI Geo · Vision</div>
+    <button class="history-btn" onclick="toggleHistory()">🕐 <span data-i18n="history">History</span> <span class="history-count" id="historyCount">0</span></button>
   </div>
 </header>
 
-<!-- History overlay -->
+<!-- Info Modal -->
+<div class="modal-overlay" id="infoModal" onclick="closeInfoModal(event)">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-title" data-i18n="infoTitle">What is WhereIsThis?</div>
+    <div class="modal-text" data-i18n="infoText">
+      <strong>WhereIsThis?</strong> is an AI-powered geolocation tool. Upload any photo and our artificial intelligence will analyze every visible detail — architecture, signs, vegetation, terrain, road markings, vehicles, and more — to determine where in the world the image was taken.<br/><br/>
+      The AI uses a multi-layered forensic analysis to narrow down the location from continent level all the way to the specific city or landmark, providing you with a confidence score and detailed reasoning.<br/><br/>
+      Simply upload an image, optionally add context, and let the AI do the rest.
+    </div>
+    <button class="modal-close" onclick="document.getElementById('infoModal').classList.remove('active')" data-i18n="close">Got it</button>
+  </div>
+</div>
+
+<!-- History -->
 <div class="history-overlay" id="historyOverlay" onclick="toggleHistory()"></div>
 <div class="history-panel" id="historyPanel">
   <div class="history-panel-header">
-    <div class="history-panel-title">Search History</div>
+    <div class="history-panel-title" data-i18n="searchHistory">Search History</div>
     <button class="history-close" onclick="toggleHistory()">✕</button>
   </div>
   <div id="historyList"></div>
@@ -223,88 +247,244 @@
 
 <!-- Loading -->
 <div class="loading-screen" id="loadingScreen">
-  <div class="scanner">
-    <div class="scanner-ring"></div>
-    <div class="scanner-ring"></div>
-    <div class="scanner-ring"></div>
-    <div class="scanner-dot"></div>
-    <div class="scanner-line"></div>
-  </div>
-  <div class="loading-text">Analyzing image...</div>
-  <div class="loading-sub">Running geo-intelligence scan</div>
+  <div class="scanner"><div class="scanner-ring"></div><div class="scanner-ring"></div><div class="scanner-ring"></div><div class="scanner-dot"></div><div class="scanner-line"></div></div>
+  <div class="loading-text" data-i18n="analyzing">Analyzing image...</div>
+  <div class="loading-sub" data-i18n="scanningGeo">Running geo-intelligence scan</div>
 </div>
 
 <!-- Upload -->
 <main id="uploadScreen">
   <div class="hero">
-    <div class="hero-tag">AI-Powered Geolocation</div>
-    <h1>Welcome!</h1>
-    <p class="subtitle">
+    <div class="hero-tag" data-i18n="heroTag">AI-Powered Geolocation</div>
+    <h1 data-i18n="welcome">Welcome!</h1>
+    <p class="subtitle" data-i18n="subtitleHTML">
       You don't know where the image is located?<br/>
       <strong>Don't worry</strong>, upload it in the box below
       and you'll find out in just a few seconds!
     </p>
   </div>
 
+  <div class="lang-section">
+    <div class="lang-select-wrap">
+      <span class="lang-label">🌐</span>
+      <select class="lang-select" id="langSelect" onchange="setLanguage(this.value)">
+        <option value="en">English</option>
+        <option value="it">Italiano</option>
+        <option value="es">Español</option>
+        <option value="fr">Français</option>
+        <option value="pt">Português</option>
+        <option value="de">Deutsch</option>
+        <option value="ja">日本語</option>
+        <option value="ko">한국어</option>
+      </select>
+      <span class="lang-arrow">▾</span>
+    </div>
+  </div>
+
   <div class="upload-section">
-    <div class="step-label"><span class="step-num">01</span> Drop the image</div>
+    <div class="step-label"><span class="step-num">01</span> <span data-i18n="stepUpload">Drop the image</span></div>
     <div class="drop-zone" id="dropZone">
       <input type="file" id="fileInput" accept="image/*" />
       <div class="drop-icon">🌍</div>
-      <div class="drop-text">Drop your image here</div>
-      <div class="drop-sub">or <span onclick="document.getElementById('fileInput').click()">browse from your device</span></div>
+      <div class="drop-text" data-i18n="dropText">Drop your image here</div>
+      <div class="drop-sub"><span data-i18n="browsePrefix">or</span> <span onclick="document.getElementById('fileInput').click()" data-i18n="browse">browse from your device</span></div>
     </div>
     <div class="preview-container" id="previewContainer">
       <img id="previewImg" src="" alt="Preview" />
-      <div class="preview-overlay">
-        <button class="preview-btn" onclick="resetImage()">✕ Remove</button>
-      </div>
-      <div class="exif-badge" id="exifBadge"></div>
+      <div class="preview-overlay"><button class="preview-btn" onclick="resetImage()" data-i18n="remove">✕ Remove</button></div>
     </div>
   </div>
 
   <div class="info-section">
     <div class="info-header">
-      <div class="step-label" style="margin-bottom:0"><span class="step-num">02</span> Additional Info</div>
-      <span class="optional-tag">optional</span>
+      <div class="step-label" style="margin-bottom:0"><span class="step-num">02</span> <span data-i18n="stepInfo">Additional Info</span></div>
+      <span class="optional-tag" data-i18n="optional">optional</span>
     </div>
-    <textarea id="additionalInfo" placeholder="Any extra clues? e.g. 'I think this is somewhere in Asia' or 'This was taken in summer 2022'..."></textarea>
+    <textarea id="additionalInfo" data-i18n-placeholder="placeholder"></textarea>
   </div>
 
   <div class="confirm-section">
-    <button class="confirm-btn" id="confirmBtn" onclick="analyzeImage()" disabled>Confirm — Analyze Image</button>
+    <button class="confirm-btn" id="confirmBtn" onclick="analyzeImage()" disabled data-i18n="confirmBtn">Confirm — Analyze Image</button>
   </div>
 </main>
 
 <!-- Results -->
 <div class="results-screen" id="resultsScreen">
   <div class="results-header">
-    <div class="results-title">Analysis Complete</div>
-    <button class="new-search-btn" onclick="resetAll()">← New search</button>
+    <div class="results-title" data-i18n="analysisComplete">Analysis Complete</div>
+    <div class="results-actions">
+      <button class="share-btn" id="shareBtn" onclick="shareResult()">📋 <span data-i18n="share">Share</span></button>
+      <button class="new-search-btn" onclick="resetAll()">← <span data-i18n="newSearch">New search</span></button>
+    </div>
   </div>
   <div id="resultsContent"></div>
 </div>
 
 <script>
-const dropZone = document.getElementById('dropZone');
-const fileInput = document.getElementById('fileInput');
-const previewContainer = document.getElementById('previewContainer');
-const previewImg = document.getElementById('previewImg');
-const confirmBtn = document.getElementById('confirmBtn');
-const uploadScreen = document.getElementById('uploadScreen');
-const loadingScreen = document.getElementById('loadingScreen');
-const resultsScreen = document.getElementById('resultsScreen');
-const exifBadge = document.getElementById('exifBadge');
+// ─── i18n ───
+const translations = {
+  en: {
+    history:"History", searchHistory:"Search History", infoTitle:"What is WhereIsThis?",
+    infoText:`<strong>WhereIsThis?</strong> is an AI-powered geolocation tool. Upload any photo and our artificial intelligence will analyze every visible detail — architecture, signs, vegetation, terrain, road markings, vehicles, and more — to determine where in the world the image was taken.<br/><br/>The AI uses a multi-layered forensic analysis to narrow down the location from continent level all the way to the specific city or landmark, providing you with a confidence score and detailed reasoning.<br/><br/>Simply upload an image, optionally add context, and let the AI do the rest.`,
+    close:"Got it", analyzing:"Analyzing image...", scanningGeo:"Running geo-intelligence scan",
+    heroTag:"AI-Powered Geolocation", welcome:"Welcome!",
+    subtitleHTML:`You don't know where the image is located?<br/><strong>Don't worry</strong>, upload it in the box below and you'll find out in just a few seconds!`,
+    stepUpload:"Drop the image", dropText:"Drop your image here", browsePrefix:"or", browse:"browse from your device",
+    remove:"✕ Remove", stepInfo:"Additional Info", optional:"optional",
+    placeholder:"Any extra clues? e.g. 'I think this is somewhere in Asia' or 'This was taken in summer 2022'...",
+    confirmBtn:"Confirm — Analyze Image", analysisComplete:"Analysis Complete", share:"Share", newSearch:"New search",
+    confidence:"Confidence Level", clues:"Visual Clues Detected", reasoning:"AI Reasoning",
+    locationMap:"Location on Map", openMaps:"Open in Google Maps", metadata:"Image Metadata",
+    download:"Download", noMetadata:"No metadata available for this image",
+    historyEmpty:"No searches yet. Your search history will appear here.", clearHistory:"Clear all history",
+    shareCopied:"Copied!", respondInLang:""
+  },
+  it: {
+    history:"Cronologia", searchHistory:"Cronologia Ricerche", infoTitle:"Cos'è WhereIsThis?",
+    infoText:`<strong>WhereIsThis?</strong> è uno strumento di geolocalizzazione basato su intelligenza artificiale. Carica una foto qualsiasi e la nostra IA analizzerà ogni dettaglio visibile — architettura, insegne, vegetazione, terreno, segnaletica stradale, veicoli e altro — per determinare dove nel mondo è stata scattata l'immagine.<br/><br/>L'IA utilizza un'analisi forense multilivello per restringere la posizione dal livello continentale fino alla città specifica o al punto di riferimento, fornendoti un punteggio di affidabilità e un ragionamento dettagliato.<br/><br/>Carica un'immagine, aggiungi contesto se vuoi, e lascia fare all'IA.`,
+    close:"Capito", analyzing:"Analisi in corso...", scanningGeo:"Scansione geo-intelligence in corso",
+    heroTag:"Geolocalizzazione con IA", welcome:"Benvenuto!",
+    subtitleHTML:`Non sai dove si trova l'immagine?<br/><strong>Non preoccuparti</strong>, caricala qui sotto e lo scoprirai in pochi secondi!`,
+    stepUpload:"Carica l'immagine", dropText:"Trascina l'immagine qui", browsePrefix:"oppure", browse:"cerca dal tuo dispositivo",
+    remove:"✕ Rimuovi", stepInfo:"Info Aggiuntive", optional:"opzionale",
+    placeholder:"Qualche indizio? es. 'Penso sia da qualche parte in Asia' o 'Scattata nell'estate 2022'...",
+    confirmBtn:"Conferma — Analizza Immagine", analysisComplete:"Analisi Completata", share:"Condividi", newSearch:"Nuova ricerca",
+    confidence:"Livello di Affidabilità", clues:"Indizi Visivi Rilevati", reasoning:"Ragionamento IA",
+    locationMap:"Posizione sulla Mappa", openMaps:"Apri in Google Maps", metadata:"Metadati Immagine",
+    download:"Scarica", noMetadata:"Nessun metadato disponibile per questa immagine",
+    historyEmpty:"Nessuna ricerca ancora. La cronologia apparirà qui.", clearHistory:"Cancella cronologia",
+    shareCopied:"Copiato!", respondInLang:"Respond in Italian."
+  },
+  es: {
+    history:"Historial", searchHistory:"Historial de Búsquedas", infoTitle:"¿Qué es WhereIsThis?",
+    infoText:`<strong>WhereIsThis?</strong> es una herramienta de geolocalización impulsada por IA. Sube cualquier foto y nuestra inteligencia artificial analizará cada detalle visible — arquitectura, señales, vegetación, terreno, marcas viales, vehículos y más — para determinar dónde en el mundo fue tomada la imagen.<br/><br/>La IA utiliza un análisis forense multicapa para reducir la ubicación desde el nivel continental hasta la ciudad específica o punto de referencia, proporcionándote una puntuación de confianza y un razonamiento detallado.<br/><br/>Simplemente sube una imagen, opcionalmente añade contexto, y deja que la IA haga el resto.`,
+    close:"Entendido", analyzing:"Analizando imagen...", scanningGeo:"Ejecutando escaneo geo-inteligente",
+    heroTag:"Geolocalización con IA", welcome:"¡Bienvenido!",
+    subtitleHTML:`¿No sabes dónde se encuentra la imagen?<br/><strong>No te preocupes</strong>, súbela aquí abajo y lo descubrirás en segundos!`,
+    stepUpload:"Sube la imagen", dropText:"Arrastra tu imagen aquí", browsePrefix:"o", browse:"busca en tu dispositivo",
+    remove:"✕ Eliminar", stepInfo:"Info Adicional", optional:"opcional",
+    placeholder:"¿Alguna pista? ej. 'Creo que es algún lugar de Asia' o 'Fue tomada en verano 2022'...",
+    confirmBtn:"Confirmar — Analizar Imagen", analysisComplete:"Análisis Completado", share:"Compartir", newSearch:"Nueva búsqueda",
+    confidence:"Nivel de Confianza", clues:"Pistas Visuales Detectadas", reasoning:"Razonamiento IA",
+    locationMap:"Ubicación en el Mapa", openMaps:"Abrir en Google Maps", metadata:"Metadatos de Imagen",
+    download:"Descargar", noMetadata:"No hay metadatos disponibles para esta imagen",
+    historyEmpty:"Sin búsquedas aún. Tu historial aparecerá aquí.", clearHistory:"Borrar historial",
+    shareCopied:"¡Copiado!", respondInLang:"Respond in Spanish."
+  },
+  fr: {
+    history:"Historique", searchHistory:"Historique des Recherches", infoTitle:"Qu'est-ce que WhereIsThis ?",
+    infoText:`<strong>WhereIsThis?</strong> est un outil de géolocalisation alimenté par l'IA. Téléchargez n'importe quelle photo et notre intelligence artificielle analysera chaque détail visible — architecture, panneaux, végétation, terrain, marquages routiers, véhicules et plus — pour déterminer où dans le monde l'image a été prise.<br/><br/>L'IA utilise une analyse forensique multicouche pour réduire l'emplacement du niveau continental jusqu'à la ville spécifique ou le point de repère, vous fournissant un score de confiance et un raisonnement détaillé.<br/><br/>Téléchargez simplement une image, ajoutez éventuellement du contexte, et laissez l'IA faire le reste.`,
+    close:"Compris", analyzing:"Analyse en cours...", scanningGeo:"Scan géo-intelligence en cours",
+    heroTag:"Géolocalisation par IA", welcome:"Bienvenue !",
+    subtitleHTML:`Vous ne savez pas où se trouve l'image ?<br/><strong>Pas de souci</strong>, téléchargez-la ci-dessous et vous le découvrirez en quelques secondes !`,
+    stepUpload:"Déposez l'image", dropText:"Déposez votre image ici", browsePrefix:"ou", browse:"parcourir votre appareil",
+    remove:"✕ Supprimer", stepInfo:"Info Supplémentaire", optional:"optionnel",
+    placeholder:"Des indices ? ex. 'Je pense que c'est quelque part en Asie' ou 'Prise en été 2022'...",
+    confirmBtn:"Confirmer — Analyser l'Image", analysisComplete:"Analyse Terminée", share:"Partager", newSearch:"Nouvelle recherche",
+    confidence:"Niveau de Confiance", clues:"Indices Visuels Détectés", reasoning:"Raisonnement IA",
+    locationMap:"Emplacement sur la Carte", openMaps:"Ouvrir dans Google Maps", metadata:"Métadonnées Image",
+    download:"Télécharger", noMetadata:"Aucune métadonnée disponible pour cette image",
+    historyEmpty:"Aucune recherche encore. Votre historique apparaîtra ici.", clearHistory:"Effacer l'historique",
+    shareCopied:"Copié !", respondInLang:"Respond in French."
+  },
+  pt: {
+    history:"Histórico", searchHistory:"Histórico de Pesquisas", infoTitle:"O que é o WhereIsThis?",
+    infoText:`<strong>WhereIsThis?</strong> é uma ferramenta de geolocalização com IA. Faça upload de qualquer foto e a nossa inteligência artificial analisará cada detalhe visível — arquitetura, sinais, vegetação, terreno, marcações rodoviárias, veículos e mais — para determinar onde no mundo a imagem foi tirada.<br/><br/>A IA usa uma análise forense multicamada para reduzir a localização do nível continental até à cidade específica ou ponto de referência, fornecendo uma pontuação de confiança e raciocínio detalhado.<br/><br/>Basta fazer upload de uma imagem, opcionalmente adicionar contexto, e deixar a IA fazer o resto.`,
+    close:"Entendi", analyzing:"Analisando imagem...", scanningGeo:"Executando scan geo-inteligente",
+    heroTag:"Geolocalização com IA", welcome:"Bem-vindo!",
+    subtitleHTML:`Não sabe onde a imagem foi tirada?<br/><strong>Não se preocupe</strong>, faça upload abaixo e descobrirá em poucos segundos!`,
+    stepUpload:"Carregue a imagem", dropText:"Arraste a imagem aqui", browsePrefix:"ou", browse:"procure no seu dispositivo",
+    remove:"✕ Remover", stepInfo:"Info Adicional", optional:"opcional",
+    placeholder:"Alguma pista? ex. 'Acho que é algum lugar na Ásia' ou 'Tirada no verão de 2022'...",
+    confirmBtn:"Confirmar — Analisar Imagem", analysisComplete:"Análise Concluída", share:"Partilhar", newSearch:"Nova pesquisa",
+    confidence:"Nível de Confiança", clues:"Pistas Visuais Detectadas", reasoning:"Raciocínio IA",
+    locationMap:"Localização no Mapa", openMaps:"Abrir no Google Maps", metadata:"Metadados da Imagem",
+    download:"Download", noMetadata:"Sem metadados disponíveis para esta imagem",
+    historyEmpty:"Sem pesquisas ainda. O seu histórico aparecerá aqui.", clearHistory:"Limpar histórico",
+    shareCopied:"Copiado!", respondInLang:"Respond in Portuguese."
+  },
+  de: {
+    history:"Verlauf", searchHistory:"Suchverlauf", infoTitle:"Was ist WhereIsThis?",
+    infoText:`<strong>WhereIsThis?</strong> ist ein KI-gestütztes Geolokalisierungstool. Laden Sie ein beliebiges Foto hoch und unsere künstliche Intelligenz analysiert jedes sichtbare Detail — Architektur, Schilder, Vegetation, Gelände, Straßenmarkierungen, Fahrzeuge und mehr — um zu bestimmen, wo auf der Welt das Bild aufgenommen wurde.<br/><br/>Die KI nutzt eine mehrschichtige forensische Analyse, um den Standort vom Kontinent bis zur spezifischen Stadt oder Sehenswürdigkeit einzugrenzen, und liefert einen Konfidenzwert sowie eine detaillierte Begründung.<br/><br/>Laden Sie einfach ein Bild hoch, fügen Sie optional Kontext hinzu, und lassen Sie die KI den Rest erledigen.`,
+    close:"Verstanden", analyzing:"Bild wird analysiert...", scanningGeo:"Geo-Intelligence-Scan läuft",
+    heroTag:"KI-gestützte Geolokalisierung", welcome:"Willkommen!",
+    subtitleHTML:`Sie wissen nicht, wo das Bild aufgenommen wurde?<br/><strong>Keine Sorge</strong>, laden Sie es unten hoch und finden Sie es in wenigen Sekunden heraus!`,
+    stepUpload:"Bild hochladen", dropText:"Bild hier ablegen", browsePrefix:"oder", browse:"auf Ihrem Gerät suchen",
+    remove:"✕ Entfernen", stepInfo:"Zusätzliche Info", optional:"optional",
+    placeholder:"Hinweise? z.B. 'Ich glaube, das ist irgendwo in Asien' oder 'Im Sommer 2022 aufgenommen'...",
+    confirmBtn:"Bestätigen — Bild Analysieren", analysisComplete:"Analyse Abgeschlossen", share:"Teilen", newSearch:"Neue Suche",
+    confidence:"Konfidenzniveau", clues:"Erkannte Visuelle Hinweise", reasoning:"KI-Begründung",
+    locationMap:"Standort auf der Karte", openMaps:"In Google Maps öffnen", metadata:"Bild-Metadaten",
+    download:"Herunterladen", noMetadata:"Keine Metadaten für dieses Bild verfügbar",
+    historyEmpty:"Noch keine Suchen. Ihr Verlauf erscheint hier.", clearHistory:"Verlauf löschen",
+    shareCopied:"Kopiert!", respondInLang:"Respond in German."
+  },
+  ja: {
+    history:"履歴", searchHistory:"検索履歴", infoTitle:"WhereIsThisとは？",
+    infoText:`<strong>WhereIsThis?</strong>はAI搭載の地理位置特定ツールです。任意の写真をアップロードすると、AIが建築、標識、植生、地形、道路標示、車両などのあらゆる視覚的詳細を分析し、画像がどこで撮影されたかを特定します。<br/><br/>AIは多層的なフォレンジック分析を使用して、大陸レベルから特定の都市やランドマークまで位置を絞り込み、信頼度スコアと詳細な推論を提供します。<br/><br/>画像をアップロードし、必要に応じてコンテキストを追加して、AIに任せてください。`,
+    close:"了解", analyzing:"画像を分析中...", scanningGeo:"地理情報スキャン実行中",
+    heroTag:"AI地理位置特定", welcome:"ようこそ！",
+    subtitleHTML:`画像の場所がわかりませんか？<br/><strong>ご心配なく</strong>、下のボックスにアップロードすれば、数秒で判明します！`,
+    stepUpload:"画像をドロップ", dropText:"ここに画像をドロップ", browsePrefix:"または", browse:"デバイスから選択",
+    remove:"✕ 削除", stepInfo:"追加情報", optional:"任意",
+    placeholder:"ヒントはありますか？例：'アジアのどこかだと思う'や'2022年夏に撮影'...",
+    confirmBtn:"確認 — 画像を分析", analysisComplete:"分析完了", share:"共有", newSearch:"新しい検索",
+    confidence:"信頼度", clues:"検出された視覚的手がかり", reasoning:"AI推論",
+    locationMap:"地図上の位置", openMaps:"Google Mapsで開く", metadata:"画像メタデータ",
+    download:"ダウンロード", noMetadata:"この画像にメタデータはありません",
+    historyEmpty:"検索履歴はまだありません。", clearHistory:"履歴を消去",
+    shareCopied:"コピーしました！", respondInLang:"Respond in Japanese."
+  },
+  ko: {
+    history:"기록", searchHistory:"검색 기록", infoTitle:"WhereIsThis란?",
+    infoText:`<strong>WhereIsThis?</strong>는 AI 기반 지리 위치 확인 도구입니다. 사진을 업로드하면 AI가 건축, 표지판, 식생, 지형, 도로 표시, 차량 등 모든 시각적 세부 사항을 분석하여 이미지가 촬영된 위치를 판별합니다.<br/><br/>AI는 다층 포렌식 분석을 통해 대륙 수준에서 특정 도시나 랜드마크까지 위치를 좁혀가며, 신뢰도 점수와 상세한 추론을 제공합니다.<br/><br/>이미지를 업로드하고 선택적으로 맥락을 추가한 다음 AI가 나머지를 처리하도록 하세요.`,
+    close:"확인", analyzing:"이미지 분석 중...", scanningGeo:"지리 정보 스캔 실행 중",
+    heroTag:"AI 지리 위치 확인", welcome:"환영합니다!",
+    subtitleHTML:`이미지가 어디에서 촬영되었는지 모르시나요?<br/><strong>걱정 마세요</strong>, 아래에 업로드하면 몇 초 안에 알 수 있습니다!`,
+    stepUpload:"이미지 업로드", dropText:"여기에 이미지를 놓으세요", browsePrefix:"또는", browse:"기기에서 찾기",
+    remove:"✕ 제거", stepInfo:"추가 정보", optional:"선택사항",
+    placeholder:"힌트가 있나요? 예: '아시아 어딘가인 것 같아요' 또는 '2022년 여름에 촬영'...",
+    confirmBtn:"확인 — 이미지 분석", analysisComplete:"분석 완료", share:"공유", newSearch:"새 검색",
+    confidence:"신뢰도", clues:"감지된 시각적 단서", reasoning:"AI 추론",
+    locationMap:"지도 위치", openMaps:"Google Maps에서 열기", metadata:"이미지 메타데이터",
+    download:"다운로드", noMetadata:"이 이미지에 사용 가능한 메타데이터가 없습니다",
+    historyEmpty:"아직 검색 기록이 없습니다.", clearHistory:"기록 삭제",
+    shareCopied:"복사됨!", respondInLang:"Respond in Korean."
+  }
+};
 
-const WEBHOOK_URL = 'https://mattiia17.app.n8n.cloud/webhook/whereisthis';
+let currentLang = 'en';
+let lastResultData = null;
 
-let currentImageBase64 = null;
-let currentFile = null;
-let extractedMetadata = null;
+function setLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem('wit_lang', lang);
+  document.getElementById('langSelect').value = lang;
+  // Update all data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang] && translations[lang][key]) {
+      if (key.includes('HTML') || key === 'infoText') {
+        el.innerHTML = translations[lang][key];
+      } else {
+        el.textContent = translations[lang][key];
+      }
+    }
+  });
+  // Placeholder
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (translations[lang] && translations[lang][key]) {
+      el.placeholder = translations[lang][key];
+    }
+  });
+}
+
+function t(key) { return (translations[currentLang] && translations[currentLang][key]) || translations.en[key] || key; }
 
 // ─── EXIF ───
 function extractEXIF(file) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const reader = new FileReader();
     reader.onload = function(e) {
       const img = new Image();
@@ -319,10 +499,7 @@ function extractEXIF(file) {
             if (tags.Make) m.cameraMake = tags.Make.trim();
             if (tags.Model) m.cameraModel = tags.Model.trim();
             if (tags.FNumber) m.aperture = 'f/' + (tags.FNumber.numerator / tags.FNumber.denominator);
-            if (tags.ExposureTime) {
-              const exp = tags.ExposureTime;
-              m.shutter = exp.numerator < exp.denominator ? '1/' + Math.round(exp.denominator / exp.numerator) + 's' : (exp.numerator / exp.denominator) + 's';
-            }
+            if (tags.ExposureTime) { const exp = tags.ExposureTime; m.shutter = exp.numerator < exp.denominator ? '1/'+Math.round(exp.denominator/exp.numerator)+'s' : (exp.numerator/exp.denominator)+'s'; }
             if (tags.ISOSpeedRatings) m.iso = 'ISO ' + tags.ISOSpeedRatings;
             if (tags.FocalLength) m.focalLength = (tags.FocalLength.numerator / tags.FocalLength.denominator) + 'mm';
             if (tags.GPSLatitude && tags.GPSLongitude) {
@@ -340,39 +517,48 @@ function extractEXIF(file) {
     reader.readAsDataURL(file);
   });
 }
-
-function dmsToDD(dms, ref) {
-  if (!dms || dms.length < 3) return NaN;
-  const d = dms[0].numerator / dms[0].denominator;
-  const m = dms[1].numerator / dms[1].denominator;
-  const s = dms[2].numerator / dms[2].denominator;
-  let dd = d + m/60 + s/3600;
-  if (ref === 'S' || ref === 'W') dd *= -1;
-  return dd;
-}
-
-function formatExifDate(dt) {
-  if (!dt) return null;
-  const p = dt.split(' ');
-  return p.length === 2 ? p[0].replace(/:/g, '-') + ' ' + p[1] : dt;
-}
+function dmsToDD(dms, ref) { if (!dms||dms.length<3) return NaN; let dd=dms[0].numerator/dms[0].denominator + (dms[1].numerator/dms[1].denominator)/60 + (dms[2].numerator/dms[2].denominator)/3600; if(ref==='S'||ref==='W') dd*=-1; return dd; }
+function formatExifDate(dt) { if(!dt)return null; const p=dt.split(' '); return p.length===2?p[0].replace(/:/g,'-')+' '+p[1]:dt; }
 
 function buildExifContext(meta) {
   if (!meta) return '';
   const parts = [];
-  if (meta.lat && meta.lng) parts.push(`GPS coordinates: ${meta.lat}, ${meta.lng}`);
-  if (meta.dateTime) parts.push(`Date/time taken: ${formatExifDate(meta.dateTime)}`);
-  if (meta.cameraMake || meta.cameraModel) parts.push(`Camera: ${[meta.cameraMake, meta.cameraModel].filter(Boolean).join(' ')}`);
-  if (meta.altitude) parts.push(`Altitude: ${meta.altitude}`);
-  return parts.length > 0 ? '\n[EXIF metadata extracted from image: ' + parts.join(' | ') + ']' : '';
+  if (meta.lat && meta.lng) parts.push('GPS coordinates: '+meta.lat+', '+meta.lng);
+  if (meta.dateTime) parts.push('Date/time: '+formatExifDate(meta.dateTime));
+  if (meta.cameraMake||meta.cameraModel) parts.push('Camera: '+[meta.cameraMake,meta.cameraModel].filter(Boolean).join(' '));
+  if (meta.altitude) parts.push('Altitude: '+meta.altitude);
+  return parts.length > 0 ? '\n[EXIF metadata from image: '+parts.join(' | ')+']' : '';
 }
 
-// ─── Drag & Drop ───
+function downloadMetadata() {
+  if (!extractedMetadata) return;
+  const blob = new Blob([JSON.stringify(extractedMetadata, null, 2)], { type:'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'metadata.json'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ─── DOM ───
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+const previewContainer = document.getElementById('previewContainer');
+const previewImg = document.getElementById('previewImg');
+const confirmBtn = document.getElementById('confirmBtn');
+const uploadScreen = document.getElementById('uploadScreen');
+const loadingScreen = document.getElementById('loadingScreen');
+const resultsScreen = document.getElementById('resultsScreen');
+
+const WEBHOOK_URL = 'https://mattiia17.app.n8n.cloud/webhook/whereisthis';
+let currentImageBase64 = null;
+let currentFile = null;
+let extractedMetadata = null;
+
+// Drag & Drop
 dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
 dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('dragover'); const f = e.dataTransfer.files[0]; if (f && f.type.startsWith('image/')) handleFile(f); });
+dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('dragover'); const f=e.dataTransfer.files[0]; if(f&&f.type.startsWith('image/')) handleFile(f); });
 dropZone.addEventListener('click', () => fileInput.click());
-fileInput.addEventListener('change', e => { if (e.target.files[0]) handleFile(e.target.files[0]); });
+fileInput.addEventListener('change', e => { if(e.target.files[0]) handleFile(e.target.files[0]); });
 
 async function handleFile(file) {
   currentFile = file;
@@ -383,140 +569,133 @@ async function handleFile(file) {
     dropZone.style.display = 'none';
     previewContainer.style.display = 'block';
     confirmBtn.disabled = false;
-
+    // Silently extract EXIF (no visual badge)
     extractedMetadata = await extractEXIF(file);
-    if (extractedMetadata) {
-      const hasGPS = extractedMetadata.lat && extractedMetadata.lng;
-      exifBadge.textContent = hasGPS ? '📋 EXIF + GPS found' : '📋 EXIF data found';
-      exifBadge.className = 'exif-badge visible';
-    } else {
-      exifBadge.textContent = '📋 No EXIF data';
-      exifBadge.className = 'exif-badge visible no-data';
-    }
   };
   reader.readAsDataURL(file);
 }
 
 function resetImage() {
-  currentImageBase64 = null; currentFile = null; extractedMetadata = null;
-  fileInput.value = '';
-  previewContainer.style.display = 'none';
-  dropZone.style.display = 'block';
-  confirmBtn.disabled = true;
-  exifBadge.className = 'exif-badge';
+  currentImageBase64=null; currentFile=null; extractedMetadata=null;
+  fileInput.value=''; previewContainer.style.display='none'; dropZone.style.display='block'; confirmBtn.disabled=true;
 }
 
-function resetAll() {
+function goHome() {
   resetImage();
-  document.getElementById('additionalInfo').value = '';
+  document.getElementById('additionalInfo').value='';
   resultsScreen.classList.remove('active');
-  uploadScreen.style.display = 'block';
+  uploadScreen.style.display='block';
 }
+
+function resetAll() { goHome(); }
 
 // ─── Analyze ───
 async function analyzeImage() {
   if (!currentImageBase64) return;
-
   let additionalInfo = document.getElementById('additionalInfo').value.trim();
-  // Append EXIF context for the AI
   additionalInfo += buildExifContext(extractedMetadata);
+  // Add language instruction
+  const langInstr = t('respondInLang');
+  if (langInstr) additionalInfo += '\n' + langInstr;
 
   uploadScreen.style.display = 'none';
   loadingScreen.classList.add('active');
 
   try {
     const resp = await fetch(WEBHOOK_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ image: currentImageBase64, additionalInfo })
     });
     const data = await resp.json();
     loadingScreen.classList.remove('active');
-
-    if (data.success) {
-      saveToHistory(data);
-      showResults(data);
-    } else {
-      showError(data.error || 'Something went wrong.');
-    }
+    if (data.success) { lastResultData = data; saveToHistory(data); showResults(data); }
+    else showError(data.error || 'Something went wrong.');
   } catch(err) {
     loadingScreen.classList.remove('active');
     showError('Connection error. Check your internet and try again.');
   }
 }
 
+// ─── Typing animation ───
+function typeText(element, text, speed = 12) {
+  let i = 0;
+  element.textContent = '';
+  const cursor = document.createElement('span');
+  cursor.className = 'typing-cursor';
+  element.appendChild(cursor);
+  return new Promise(resolve => {
+    function type() {
+      if (i < text.length) {
+        cursor.before(text.charAt(i));
+        i++;
+        setTimeout(type, speed);
+      } else {
+        cursor.remove();
+        resolve();
+      }
+    }
+    type();
+  });
+}
+
 // ─── Results ───
 function showResults(data) {
-  const cluesHTML = (data.clues || []).map((c,i) => `<span class="clue-tag" style="animation-delay:${i*0.1}s">${c}</span>`).join('');
+  // Filter out EXIF/GPS/coordinate clues from display
+  const filteredClues = (data.clues || []).filter(c => {
+    const lower = c.toLowerCase();
+    return !lower.includes('gps') && !lower.includes('exif') && !lower.includes('metadata') && !lower.includes('coordinates') && !lower.includes('coordinate');
+  });
+  const cluesHTML = filteredClues.map((c,i) => `<span class="clue-tag" style="animation-delay:${i*0.1}s">${c}</span>`).join('');
 
-  // Map section — use EXIF GPS if available, otherwise try to geocode from country+region
+  // Filter reasoning: remove EXIF/GPS/metadata lines
+  let cleanReasoning = (data.reasoning || 'No reasoning provided.');
+  cleanReasoning = cleanReasoning.split('\n').filter(line => {
+    const l = line.toLowerCase();
+    return !l.includes('exif') && !l.includes('gps coordinate') && !l.includes('metadata') && !l.includes('gps data');
+  }).join('\n').trim();
+
+  // Map
   let mapHTML = '';
-  const hasExifGPS = extractedMetadata && extractedMetadata.lat && extractedMetadata.lng;
-  if (hasExifGPS) {
-    const lat = extractedMetadata.lat;
-    const lng = extractedMetadata.lng;
-    mapHTML = `
-      <div class="map-section">
-        <div class="section-label">Location on Map (from EXIF GPS)</div>
-        <div class="map-container">
-          <iframe src="https://maps.google.com/maps?q=${lat},${lng}&z=14&output=embed" allowfullscreen loading="lazy"></iframe>
-        </div>
-        <div class="map-coords">📍 ${lat}, ${lng} — <a href="https://www.google.com/maps?q=${lat},${lng}" target="_blank" rel="noopener">Open in Google Maps</a></div>
-      </div>`;
+  const hasGPS = extractedMetadata && extractedMetadata.lat && extractedMetadata.lng;
+  if (hasGPS) {
+    mapHTML = `<div class="map-section"><div class="section-label">${t('locationMap')}</div><div class="map-container"><iframe src="https://maps.google.com/maps?q=${extractedMetadata.lat},${extractedMetadata.lng}&z=14&output=embed" allowfullscreen loading="lazy"></iframe></div><div class="map-coords">📍 ${extractedMetadata.lat}, ${extractedMetadata.lng} — <a href="https://www.google.com/maps?q=${extractedMetadata.lat},${extractedMetadata.lng}" target="_blank">${t('openMaps')}</a></div></div>`;
   } else if (data.region && data.country) {
-    const query = encodeURIComponent(`${data.region}, ${data.country}`);
-    mapHTML = `
-      <div class="map-section">
-        <div class="section-label">Estimated Location on Map</div>
-        <div class="map-container">
-          <iframe src="https://maps.google.com/maps?q=${query}&z=10&output=embed" allowfullscreen loading="lazy"></iframe>
-        </div>
-        <div class="map-coords">📍 ${data.region}, ${data.country} — <a href="https://www.google.com/maps/search/${query}" target="_blank" rel="noopener">Open in Google Maps</a></div>
-      </div>`;
+    const q = encodeURIComponent(data.region+', '+data.country);
+    mapHTML = `<div class="map-section"><div class="section-label">${t('locationMap')}</div><div class="map-container"><iframe src="https://maps.google.com/maps?q=${q}&z=10&output=embed" allowfullscreen loading="lazy"></iframe></div><div class="map-coords">📍 ${data.region}, ${data.country} — <a href="https://www.google.com/maps/search/${q}" target="_blank">${t('openMaps')}</a></div></div>`;
   }
 
-  // EXIF info display
-  let exifHTML = '';
+  // Metadata download section
+  let metaHTML = '';
   if (extractedMetadata) {
-    const m = extractedMetadata;
-    let items = '';
-    if (m.dateTime) items += `<div class="exif-item"><div class="exif-item-label">Date</div><div class="exif-item-value">${formatExifDate(m.dateTime)}</div></div>`;
-    if (m.cameraMake||m.cameraModel) items += `<div class="exif-item"><div class="exif-item-label">Camera</div><div class="exif-item-value">${[m.cameraMake,m.cameraModel].filter(Boolean).join(' ')}</div></div>`;
-    if (m.aperture) items += `<div class="exif-item"><div class="exif-item-label">Aperture</div><div class="exif-item-value">${m.aperture}</div></div>`;
-    if (m.shutter) items += `<div class="exif-item"><div class="exif-item-label">Shutter</div><div class="exif-item-value">${m.shutter}</div></div>`;
-    if (m.iso) items += `<div class="exif-item"><div class="exif-item-label">ISO</div><div class="exif-item-value">${m.iso}</div></div>`;
-    if (m.focalLength) items += `<div class="exif-item"><div class="exif-item-label">Focal</div><div class="exif-item-value">${m.focalLength}</div></div>`;
-    if (m.altitude) items += `<div class="exif-item"><div class="exif-item-label">Altitude</div><div class="exif-item-value">${m.altitude}</div></div>`;
-    if (items) {
-      exifHTML = `
-        <div class="exif-section">
-          <div class="section-label">Image Metadata (EXIF)</div>
-          <div class="exif-grid">${items}</div>
-        </div>`;
-    }
+    metaHTML = `<div class="meta-download-section"><div class="meta-download-row"><div class="section-label" style="margin-bottom:0">${t('metadata')}</div><button class="meta-download-btn" onclick="downloadMetadata()">⬇ ${t('download')}</button></div></div>`;
+  } else {
+    metaHTML = `<div class="meta-download-section"><div class="meta-download-row"><div class="section-label" style="margin-bottom:0">${t('metadata')}</div><span class="meta-none">${t('noMetadata')}</span></div></div>`;
   }
 
   document.getElementById('resultsContent').innerHTML = `
     <div class="location-card">
       <div class="location-hero">
-        <div class="flag-display">${data.flag || '🌍'}</div>
+        <div class="flag-display">${data.flag||'🌍'}</div>
         <div class="location-info">
-          <div class="country-name">${data.country || 'Unknown'}</div>
-          <div class="region-name"><span class="pin">📍</span> ${data.region || 'Unknown region'}</div>
+          <div class="country-name">${data.country||'Unknown'}</div>
+          <div class="region-name">📍 ${data.region||'Unknown region'}</div>
         </div>
       </div>
       <div class="confidence-section">
-        <div class="confidence-label"><span>Confidence Level</span><span class="confidence-value">${data.confidence||0}%</span></div>
+        <div class="confidence-label"><span>${t('confidence')}</span><span class="confidence-value">${data.confidence||0}%</span></div>
         <div class="confidence-bar"><div class="confidence-fill" id="confidenceFill"></div></div>
       </div>
-      ${cluesHTML ? `<div class="clues-section"><div class="section-label">Visual Clues Detected</div><div class="clues-list">${cluesHTML}</div></div>` : ''}
-      <div class="reasoning-section"><div class="section-label">AI Reasoning</div><div class="reasoning-text">${data.reasoning||'No reasoning provided.'}</div></div>
+      ${cluesHTML?`<div class="clues-section"><div class="section-label">${t('clues')}</div><div class="clues-list">${cluesHTML}</div></div>`:''}
+      <div class="reasoning-section"><div class="section-label">${t('reasoning')}</div><div class="reasoning-text" id="reasoningText"></div></div>
       ${mapHTML}
-      ${exifHTML}
+      ${metaHTML}
     </div>`;
 
   resultsScreen.classList.add('active');
-  setTimeout(() => { const f = document.getElementById('confidenceFill'); if(f) f.style.width = `${data.confidence||0}%`; }, 300);
+  setTimeout(() => { const f=document.getElementById('confidenceFill'); if(f) f.style.width=`${data.confidence||0}%`; }, 300);
+  // Typing animation for reasoning
+  const reasoningEl = document.getElementById('reasoningText');
+  if (reasoningEl) typeText(reasoningEl, cleanReasoning, 10);
 }
 
 function showError(msg) {
@@ -524,95 +703,57 @@ function showError(msg) {
   resultsScreen.classList.add('active');
 }
 
-// ─── History ───
-function getHistory() {
-  try { return JSON.parse(localStorage.getItem('wit_history') || '[]'); } catch { return []; }
+// ─── Share ───
+function shareResult() {
+  if (!lastResultData) return;
+  const d = lastResultData;
+  const text = `${d.flag} ${d.country} — ${d.region}\nConfidence: ${d.confidence}%\n\nAnalyzed with WhereIsThis?`;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('shareBtn');
+    btn.classList.add('copied');
+    btn.innerHTML = `✓ ${t('shareCopied')}`;
+    setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = `📋 ${t('share')}`; }, 2000);
+  });
 }
 
+// ─── Info modal ───
+function openInfoModal() { document.getElementById('infoModal').classList.add('active'); }
+function closeInfoModal(e) { if(e.target===document.getElementById('infoModal')) document.getElementById('infoModal').classList.remove('active'); }
+
+// ─── History ───
+function getHistory() { try{return JSON.parse(localStorage.getItem('wit_history')||'[]')}catch{return[]} }
 function saveToHistory(data) {
   const history = getHistory();
-  // Create small thumbnail
-  let thumb = '';
-  if (currentImageBase64) {
-    try {
-      const canvas = document.createElement('canvas');
-      const img = new Image();
-      img.src = currentImageBase64;
-      canvas.width = 96; canvas.height = 96;
-      const ctx = canvas.getContext('2d');
-      const size = Math.min(img.naturalWidth || 200, img.naturalHeight || 200);
-      ctx.drawImage(img, 0, 0, size, size, 0, 0, 96, 96);
-      thumb = canvas.toDataURL('image/jpeg', 0.5);
-    } catch { thumb = ''; }
-  }
-
-  history.unshift({
-    country: data.country || 'Unknown',
-    region: data.region || '',
-    flag: data.flag || '🌍',
-    confidence: data.confidence || 0,
-    thumb,
-    date: new Date().toISOString()
-  });
-
-  // Keep last 20
-  if (history.length > 20) history.length = 20;
-  localStorage.setItem('wit_history', JSON.stringify(history));
+  let thumb='';
+  if(currentImageBase64){try{const c=document.createElement('canvas');const img=new Image();img.src=currentImageBase64;c.width=96;c.height=96;const ctx=c.getContext('2d');ctx.drawImage(img,0,0,img.naturalWidth||200,img.naturalHeight||200,0,0,96,96);thumb=c.toDataURL('image/jpeg',0.5)}catch{}}
+  history.unshift({country:data.country||'Unknown',region:data.region||'',flag:data.flag||'🌍',confidence:data.confidence||0,thumb,date:new Date().toISOString()});
+  if(history.length>20) history.length=20;
+  localStorage.setItem('wit_history',JSON.stringify(history));
   updateHistoryCount();
 }
-
-function updateHistoryCount() {
-  const count = getHistory().length;
-  document.getElementById('historyCount').textContent = count;
+function updateHistoryCount(){document.getElementById('historyCount').textContent=getHistory().length}
+function toggleHistory(){
+  const p=document.getElementById('historyPanel'),o=document.getElementById('historyOverlay');
+  if(p.classList.contains('active')){p.classList.remove('active');o.classList.remove('active')}
+  else{renderHistory();p.classList.add('active');o.classList.add('active')}
 }
-
-function toggleHistory() {
-  const panel = document.getElementById('historyPanel');
-  const overlay = document.getElementById('historyOverlay');
-  const isOpen = panel.classList.contains('active');
-  if (isOpen) {
-    panel.classList.remove('active');
-    overlay.classList.remove('active');
-  } else {
-    renderHistory();
-    panel.classList.add('active');
-    overlay.classList.add('active');
-  }
-}
-
-function renderHistory() {
-  const history = getHistory();
-  const list = document.getElementById('historyList');
-  if (history.length === 0) {
-    list.innerHTML = '<div class="history-empty">No searches yet.<br/>Your search history will appear here.</div>';
-    return;
-  }
-  let html = '';
-  history.forEach(h => {
-    const d = new Date(h.date);
-    const dateStr = d.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }) + ' · ' + d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
-    html += `
-      <div class="history-item">
-        ${h.thumb ? `<img class="history-thumb" src="${h.thumb}" alt="" />` : '<div class="history-thumb" style="background:var(--bg);display:flex;align-items:center;justify-content:center;">🌍</div>'}
-        <div class="history-details">
-          <div class="history-country">${h.flag} ${h.country}</div>
-          <div class="history-region">${h.region}</div>
-          <div class="history-date">${dateStr}</div>
-        </div>
-        <div class="history-conf">${h.confidence}%</div>
-      </div>`;
+function renderHistory(){
+  const h=getHistory(),list=document.getElementById('historyList');
+  if(!h.length){list.innerHTML=`<div class="history-empty">${t('historyEmpty')}</div>`;return}
+  let html='';
+  h.forEach(item=>{
+    const d=new Date(item.date);
+    const ds=d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})+' · '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+    html+=`<div class="history-item">${item.thumb?`<img class="history-thumb" src="${item.thumb}"/>`:'<div class="history-thumb" style="background:var(--bg);display:flex;align-items:center;justify-content:center">🌍</div>'}<div class="history-details"><div class="history-country">${item.flag} ${item.country}</div><div class="history-region">${item.region}</div><div class="history-date">${ds}</div></div><div class="history-conf">${item.confidence}%</div></div>`;
   });
-  html += `<div class="history-clear"><button class="history-clear-btn" onclick="clearHistory()">Clear all history</button></div>`;
-  list.innerHTML = html;
+  html+=`<div class="history-clear"><button class="history-clear-btn" onclick="clearHistory()">${t('clearHistory')}</button></div>`;
+  list.innerHTML=html;
 }
-
-function clearHistory() {
-  localStorage.removeItem('wit_history');
-  updateHistoryCount();
-  renderHistory();
-}
+function clearHistory(){localStorage.removeItem('wit_history');updateHistoryCount();renderHistory()}
 
 // Init
+const savedLang = localStorage.getItem('wit_lang') || 'en';
+setLanguage(savedLang);
 updateHistoryCount();
 </script>
 </body>
